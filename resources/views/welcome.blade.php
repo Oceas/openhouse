@@ -269,11 +269,12 @@
                         </ul>
                     </div>
                     <div>
-                        <h3 class="font-semibold mb-4">Company</h3>
+                        <h3 class="font-semibold mb-4">Documentation</h3>
                         <ul class="space-y-2 text-gray-400">
-                            <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
-                            <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                            <li><a href="/docs/getting-started" class="hover:text-white transition-colors">Getting Started</a></li>
+                            <li><a href="/docs/property-management" class="hover:text-white transition-colors">Property Management</a></li>
+                            <li><a href="/docs/visitor-tracking" class="hover:text-white transition-colors">Visitor Tracking</a></li>
+                            <li><a href="/docs/api" class="hover:text-white transition-colors">API Reference</a></li>
                         </ul>
                     </div>
                     <div>

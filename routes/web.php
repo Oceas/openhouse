@@ -19,6 +19,31 @@ Route::get('/p/{slug}', [App\Http\Controllers\PublicPropertyController::class, '
 Route::get('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'showSigninForm'])->name('public.property.signin.form');
 Route::post('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'store'])->name('public.property.signin');
 
+// Documentation routes
+Route::get('/docs/getting-started', function () {
+    return view('docs.getting-started');
+})->name('docs.getting-started');
+
+Route::get('/docs/property-management', function () {
+    return view('docs.property-management');
+})->name('docs.property-management');
+
+Route::get('/docs/visitor-tracking', function () {
+    return view('docs.visitor-tracking');
+})->name('docs.visitor-tracking');
+
+Route::get('/docs/subscriptions', function () {
+    return view('docs.subscriptions');
+})->name('docs.subscriptions');
+
+Route::get('/docs/api', function () {
+    return view('docs.api');
+})->name('docs.api');
+
+Route::get('/docs/faq', function () {
+    return view('docs.faq');
+})->name('docs.faq');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'subscription'])->name('dashboard');

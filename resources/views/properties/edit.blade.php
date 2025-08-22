@@ -1,16 +1,14 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Edit Property') }}
-            </h2>
+@extends('layouts.app')
+
+@section('content')
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Edit Property</h2>
             <a href="{{ route('properties.index') }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 font-medium">
                 ← Back to Properties
             </a>
         </div>
-    </x-slot>
-
-    <div class="max-w-4xl mx-auto">
         <form method="POST" action="{{ route('properties.update', $property) }}" enctype="multipart/form-data" class="space-y-8">
             @method('PUT')
             @csrf
@@ -813,4 +811,4 @@
             }
         });
     </script>
-</x-app-layout>
+@endsection

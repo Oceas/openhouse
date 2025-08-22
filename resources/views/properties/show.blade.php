@@ -1,30 +1,31 @@
-<x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ $property->title }}
-            </h2>
-                            <div class="flex space-x-3">
-                    @if($property->status === 'active')
-                        <a href="{{ route('public.property.show', $property->slug) }}"
-                           target="_blank"
-                           class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
-                            View Public Page
-                        </a>
-                    @endif
-                               <a href="{{ route('properties.visitors.index', $property) }}"
-              class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
-               View Visitors ({{ $property->visitorSignins()->count() }})
-           </a>
-           <a href="{{ route('public.property.signin.form', $property->slug) }}"
-              target="_blank"
-              class="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
-               View Sign-in Form
-           </a>
-                    <a href="{{ route('properties.edit', $property) }}"
-                       class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
-                        Edit Property
+@extends('layouts.app')
+
+@section('content')
+    <div class="max-w-6xl mx-auto space-y-8">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $property->title }}</h2>
+            <div class="flex space-x-3">
+                @if($property->status === 'active')
+                    <a href="{{ route('public.property.show', $property->slug) }}"
+                       target="_blank"
+                       class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
+                        View Public Page
                     </a>
+                @endif
+                <a href="{{ route('properties.visitors.index', $property) }}"
+                   class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
+                    View Visitors ({{ $property->visitorSignins()->count() }})
+                </a>
+                <a href="{{ route('public.property.signin.form', $property->slug) }}"
+                   target="_blank"
+                   class="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
+                    View Sign-in Form
+                </a>
+                <a href="{{ route('properties.edit', $property) }}"
+                   class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
+                    Edit Property
+                </a>
                 <a href="{{ route('properties.pdf', $property) }}"
                    class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
                     Download PDF
@@ -35,9 +36,6 @@
                 </a>
             </div>
         </div>
-    </x-slot>
-
-    <div class="max-w-6xl mx-auto space-y-8">
         <!-- Property Header -->
         <div class="bg-white dark:bg-gray-800 card-shadow rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
             <div class="relative h-96 bg-gray-200 dark:bg-gray-700">
@@ -412,4 +410,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

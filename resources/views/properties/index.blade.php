@@ -3,6 +3,17 @@
 @section('content')
 
     <div class="space-y-6">
+        <!-- Header with Add Property Button -->
+        <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">My Properties</h2>
+            <a href="{{ route('properties.create') }}" class="btn-primary px-6 py-3 text-white font-medium rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg class="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                Add Property
+            </a>
+        </div>
+
         @if(session('success'))
             <div class="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 text-green-800 dark:text-green-200 px-4 py-3 rounded-xl">
                 {{ session('success') }}
@@ -83,21 +94,12 @@
                                 </div>
                             </div>
 
-                            <!-- Action Buttons -->
+                            <!-- Primary Action Buttons -->
                             <div class="flex space-x-2 mb-3">
                                 <a href="{{ route('properties.show', $property) }}"
                                    class="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
                                     View
                                 </a>
-                                           <a href="{{ route('properties.visitors.index', $property) }}"
-              class="flex-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
-               Visitors ({{ $property->visitorSignins()->count() }})
-           </a>
-           <a href="{{ route('public.property.signin.form', $property->slug) }}"
-              target="_blank"
-              class="flex-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
-               Sign-in Form
-           </a>
                                 <a href="{{ route('properties.edit', $property) }}"
                                    class="flex-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-200 dark:hover:bg-indigo-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
                                     Edit
@@ -105,6 +107,19 @@
                                 <a href="{{ route('properties.pdf', $property) }}"
                                    class="flex-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
                                     PDF
+                                </a>
+                            </div>
+
+                            <!-- Secondary Action Buttons -->
+                            <div class="flex space-x-2 mb-3">
+                                <a href="{{ route('properties.visitors.index', $property) }}"
+                                   class="flex-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
+                                    Visitors ({{ $property->visitorSignins()->count() }})
+                                </a>
+                                <a href="{{ route('public.property.signin.form', $property->slug) }}"
+                                   target="_blank"
+                                   class="flex-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
+                                    Sign-in Form
                                 </a>
                             </div>
 

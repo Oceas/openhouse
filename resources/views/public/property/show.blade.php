@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $property->title }} - {{ $property->full_address }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/open-house.png') }}">
     <meta name="description" content="{{ $property->meta_description ?? $property->description }}">
 
         <!-- Tailwind CSS -->
@@ -220,11 +221,8 @@
     <header class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">OH</span>
-                    </div>
-                    <span class="ml-2 text-xl font-bold text-gray-900">Open House</span>
+                <div class="flex items-center p-3">
+                    <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-48 h-auto">
                 </div>
                 <div class="text-sm text-gray-600">
                     Property Listing

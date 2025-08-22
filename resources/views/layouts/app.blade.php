@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Open House - {{ $title ?? 'Dashboard' }}</title>
+        <link rel="icon" type="image/png" href="{{ asset('images/open-house.png') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

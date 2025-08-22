@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - {{ $property->title }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/open-house.png') }}">
     <meta name="description" content="Sign in to receive more information about {{ $property->title }}">
 
     <!-- Tailwind CSS -->
@@ -35,11 +36,8 @@
     <header class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 bg-gradient-to-r from-primary to-secondary rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">OH</span>
-                    </div>
-                    <span class="ml-2 text-xl font-bold text-gray-900">Open House</span>
+                <div class="flex items-center p-3">
+                    <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-48 h-auto">
                 </div>
                 <div class="text-sm text-gray-600">
                     Visitor Sign-in
@@ -56,7 +54,7 @@
                     <div class="bg-white rounded-2xl card-shadow p-8">
                         <div class="flex items-center justify-between mb-6">
                             <h1 class="text-2xl font-bold text-gray-900">{{ $property->title }}</h1>
-                            <a href="{{ route('public.property.show', $property->slug) }}" 
+                            <a href="{{ route('public.property.show', $property->slug) }}"
                                class="text-primary hover:text-primary/80 text-sm font-medium">
                                 ← Back to Property
                             </a>
@@ -64,8 +62,8 @@
 
                         @if($property->featured_image)
                             <div class="mb-6">
-                                <img src="{{ Storage::url($property->featured_image) }}" 
-                                     alt="{{ $property->title }}" 
+                                <img src="{{ Storage::url($property->featured_image) }}"
+                                     alt="{{ $property->title }}"
                                      class="w-full h-48 object-cover rounded-lg">
                             </div>
                         @endif
@@ -143,7 +141,7 @@
 
                     <form id="visitor-signin-form" class="space-y-6">
                         @csrf
-                        
+
                         <!-- Basic Information -->
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
@@ -159,13 +157,13 @@
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                             </div>
-                            
+
                             <div class="mt-4">
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                                 <input type="email" id="email" name="email" required
                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
                             </div>
-                            
+
                             <div class="mt-4">
                                 <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                                 <input type="tel" id="phone" name="phone"
@@ -201,7 +199,7 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="grid grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <label for="budget_min" class="block text-sm font-medium text-gray-700 mb-1">Budget Min</label>
@@ -214,7 +212,7 @@
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
                                 </div>
                             </div>
-                            
+
                             <div class="mt-4">
                                 <label for="source" class="block text-sm font-medium text-gray-700 mb-1">How did you find this property?</label>
                                 <select id="source" name="source"
@@ -263,7 +261,7 @@
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
                         </div>
 
-                        <button type="submit" 
+                        <button type="submit"
                                 class="w-full bg-primary text-white py-4 px-6 rounded-lg font-medium hover:bg-primary/90 transition-colors text-lg">
                             Sign In
                         </button>
@@ -298,21 +296,21 @@
             if (signinForm) {
                 signinForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    
+
                     const formData = new FormData(signinForm);
                     const submitButton = signinForm.querySelector('button[type="submit"]');
                     const successDiv = document.getElementById('signin-success');
                     const errorDiv = document.getElementById('signin-error');
                     const errorMessage = document.getElementById('error-message');
-                    
+
                     // Disable submit button and show loading state
                     submitButton.disabled = true;
                     submitButton.textContent = 'Signing In...';
-                    
+
                     // Hide previous messages
                     successDiv.classList.add('hidden');
                     errorDiv.classList.add('hidden');
-                    
+
                     fetch('{{ route("public.property.signin", $property->slug) }}', {
                         method: 'POST',
                         body: formData,
@@ -326,14 +324,14 @@
                             // Show success message
                             successDiv.classList.remove('hidden');
                             signinForm.reset();
-                            
+
                             // Scroll to success message
                             successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         } else {
                             // Show error message
                             errorMessage.textContent = data.message || 'An error occurred. Please try again.';
                             errorDiv.classList.remove('hidden');
-                            
+
                             // Scroll to error message
                             errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         }

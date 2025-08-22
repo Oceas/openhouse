@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, Billable;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -26,6 +27,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'trial_ends_at',
     ];
 
     /**
@@ -48,6 +50,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'trial_ends_at' => 'datetime',
         ];
     }
 
@@ -60,7 +63,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Boot method for automatic UUID generation
+     * Boot method for automatic UUID generation and trial setup
      */
     protected static function boot()
     {
@@ -70,6 +73,39 @@ class User extends Authenticatable
             if (empty($user->id)) {
                 $user->id = Uuid::uuid4()->toString();
             }
+
+            // Set trial period to 14 days from now
+            if (empty($user->trial_ends_at)) {
+                $user->trial_ends_at = now()->addDays(14);
+            }
         });
+    }
+
+    /**
+     * Determine if the user has access to the platform
+     */
+    public function hasAccess(): bool
+    {
+        return $this->onTrial() || $this->subscribed('default');
+    }
+
+    /**
+     * Determine if the user is on trial
+     */
+    public function onTrial(): bool
+    {
+        return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+    }
+
+    /**
+     * Get the number of trial days remaining
+     */
+    public function trialDaysRemaining(): int
+    {
+        if (!$this->onTrial()) {
+            return 0;
+        }
+
+        return max(0, now()->diffInDays($this->trial_ends_at, false));
     }
 }

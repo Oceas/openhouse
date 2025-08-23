@@ -18,6 +18,12 @@
                     <x-nav-link :href="route('properties.index')" :active="request()->routeIs('properties.*')" class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors duration-200">
                         {{ __('Properties') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('leads.index')" :active="request()->routeIs('leads.*')" class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors duration-200">
+                        {{ __('Leads') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('analytics.index')" :active="request()->routeIs('analytics.*')" class="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors duration-200">
+                        {{ __('Analytics') }}
+                    </x-nav-link>
                 </div>
             </div>
 

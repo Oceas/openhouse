@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,9 +47,7 @@ Route::get('/docs/faq', function () {
     return view('docs.faq');
 })->name('docs.faq');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'subscription'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->middleware(['auth', 'verified', 'subscription'])->name('dashboard');
 
 // Subscription routes (auth required but no subscription check)
 Route::middleware('auth')->group(function () {
@@ -79,6 +80,20 @@ Route::middleware(['auth', 'subscription'])->group(function () {
         $visitorSignin = App\Models\VisitorSignin::find($visitorSigninId);
         return view('visitor-signins.show', compact('property', 'visitorSignin'));
     })->name('test.visitor.show');
+
+    // Lead Management Routes
+    Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
+    Route::get('/leads/follow-ups', [LeadController::class, 'followUps'])->name('leads.follow-ups');
+    Route::get('/leads/export', [LeadController::class, 'export'])->name('leads.export');
+    Route::get('/leads/{lead}', [LeadController::class, 'show'])->name('leads.show');
+    Route::patch('/leads/{lead}/status', [LeadController::class, 'updateStatus'])->name('leads.update-status');
+    Route::post('/leads/{lead}/contact', [LeadController::class, 'markContacted'])->name('leads.mark-contacted');
+    Route::post('/leads/{lead}/follow-up', [LeadController::class, 'scheduleFollowUp'])->name('leads.schedule-follow-up');
+    Route::post('/leads/{lead}/notes', [LeadController::class, 'addNote'])->name('leads.add-note');
+
+    // Analytics Routes
+    Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
+    Route::get('/analytics/export', [AnalyticsController::class, 'export'])->name('analytics.export');
 });
 
 require __DIR__.'/auth.php';

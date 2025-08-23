@@ -182,44 +182,44 @@
                                 <p class="text-gray-600">Start with a 14-day free trial</p>
                             </div>
 
-                            <ul class="space-y-4 mb-8">
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Unlimited property listings</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Visitor sign-in management</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Photo galleries & virtual tours</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">PDF exports & reports</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Open house management</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                    </svg>
-                                    <span class="text-gray-700">Public listing pages</span>
-                                </li>
-                            </ul>
+                                                         <ul class="space-y-4 mb-8">
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">Complete CRM & lead management</span>
+                                 </li>
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">Unlimited property listings</span>
+                                 </li>
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">Lead scoring & follow-up tracking</span>
+                                 </li>
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">Photo galleries & virtual tours</span>
+                                 </li>
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">PDF exports & reports</span>
+                                 </li>
+                                 <li class="flex items-start">
+                                     <svg class="w-6 h-6 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                     </svg>
+                                     <span class="text-gray-700">Public listing pages</span>
+                                 </li>
+                             </ul>
 
                             <a href="{{ route('register') }}" class="block w-full btn-primary text-white py-4 px-6 rounded-xl font-semibold text-center hover-scale">
                                 Start Free Trial

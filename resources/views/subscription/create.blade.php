@@ -1,6 +1,4 @@
-@extends('layouts.guest')
-
-@section('content')
+<x-guest-layout>
 <div class="min-h-screen flex items-center justify-center py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
@@ -162,4 +160,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-guest-layout>

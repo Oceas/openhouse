@@ -80,6 +80,9 @@ class VisitorSigninController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
+        // Calculate and set lead score
+        $signin->updateLeadScore();
+
         return response()->json([
             'success' => true,
             'message' => 'Thank you for signing in! We\'ll be in touch soon.',

@@ -6,14 +6,16 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
     return view('welcome');
-})->name('home');
+})->name('welcome');
+
+// Public Property Search
+Route::get('/search', [App\Http\Controllers\PublicSearchController::class, 'index'])->name('public.search');
+Route::get('/search/map-properties', [App\Http\Controllers\PublicSearchController::class, 'getMapProperties'])->name('public.search.map-properties');
 
 // Public property viewing route
 Route::get('/p/{slug}', [App\Http\Controllers\PublicPropertyController::class, 'show'])->name('public.property.show');
@@ -94,6 +96,12 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Analytics Routes
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     Route::get('/analytics/export', [AnalyticsController::class, 'export'])->name('analytics.export');
+
+    // Team Management Routes
+    Route::resource('teams', TeamController::class);
+    Route::get('/teams/{team}/members', [TeamController::class, 'members'])->name('teams.members');
+    Route::post('/teams/{team}/members', [TeamController::class, 'addMember'])->name('teams.add-member');
+    Route::delete('/teams/{team}/members/{user}', [TeamController::class, 'removeMember'])->name('teams.remove-member');
 });
 
 require __DIR__.'/auth.php';

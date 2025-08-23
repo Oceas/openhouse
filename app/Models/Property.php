@@ -69,7 +69,11 @@ class Property extends Model
         'meta_title',
         'meta_description',
         'slug',
-        'user_id',
+            'user_id',
+    'team_id',
+    'is_public',
+    'latitude',
+    'longitude',
     ];
 
     protected $casts = [
@@ -88,12 +92,20 @@ class Property extends Model
         'open_house_end' => 'datetime',
         'list_date' => 'date',
         'expiration_date' => 'date',
+        'is_public' => 'boolean',
+        'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
     ];
 
     // Relationships
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function team(): BelongsTo
+    {
+        return $this->belongsTo(Team::class);
     }
 
     /**
@@ -143,6 +155,9 @@ class Property extends Model
 
     public function getFormattedPriceAttribute(): string
     {
+        if (!$this->list_price) {
+            return 'Price on request';
+        }
         return '$' . number_format($this->list_price);
     }
 

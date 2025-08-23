@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
@@ -60,6 +62,40 @@ class User extends Authenticatable
     public function properties(): HasMany
     {
         return $this->hasMany(Property::class);
+    }
+
+    /**
+     * Get the teams the user belongs to.
+     */
+    public function teams(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class, 'team_user')
+                    ->withPivot('role', 'permissions')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Get the team the user owns.
+     */
+    public function ownedTeam(): HasOne
+    {
+        return $this->hasOne(Team::class, 'owner_id');
+    }
+
+    /**
+     * Get the primary team for the user (owned team or first joined team).
+     */
+    public function primaryTeam(): ?Team
+    {
+        return $this->ownedTeam ?? $this->teams()->first();
+    }
+
+    /**
+     * Check if user is part of any team.
+     */
+    public function hasTeam(): bool
+    {
+        return $this->ownedTeam()->exists() || $this->teams()->exists();
     }
 
     /**

@@ -217,19 +217,24 @@
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-sm border-b border-gray-200">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center p-3">
-                    <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-48 h-auto">
+                <div class="flex items-center">
+                    <a href="{{ route('welcome') }}" class="flex items-center">
+                        <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-32 h-auto">
+                    </a>
                 </div>
-                <div class="text-sm text-gray-600">
-                    Property Listing
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('public.search') }}" class="text-gray-600 hover:text-gray-900 font-medium">Search Properties</a>
+                    <a href="{{ route('welcome') }}" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 font-medium">Sign In</a>
+                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700">Get Started</a>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 
         <!-- Photo Carousel Section -->
     <div class="relative">

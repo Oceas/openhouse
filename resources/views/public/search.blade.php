@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Property Search - Open House</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/open-house.png') }}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Leaflet CSS and JS for OpenStreetMap -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Instrument Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .map-container {
+            height: calc(100vh - 200px);
+            min-height: 400px;
+            width: 100%;
+        }
+        .property-card {
+            transition: all 0.3s ease;
+        }
+        .property-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .filter-panel {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        .map-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .property-marker {
+            background: #3B82F6;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .property-marker:hover {
+            background: #1D4ED8;
+            transform: scale(1.1);
+        }
+        .property-popup {
+            max-width: 300px;
+        }
+        .property-popup img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="{{ route('welcome') }}" class="flex items-center">
+                        <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-32 h-auto">
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('welcome') }}" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 font-medium">Sign In</a>
+                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div x-data="mapData" class="relative">
+
+        <!-- Search Header -->
+        <div class="bg-white border-b border-gray-200 px-4 py-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-900 mb-4">Find Your Dream Home</h1>
+
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('public.search') }}" class="flex flex-wrap gap-4">
+                    <div class="flex-1 min-w-64">
+                        <input type="text"
+                               name="location"
+                               placeholder="Enter city, state, or zip code"
+                               value="{{ request('location') }}"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+
+                    <div class="flex gap-2">
+                        <select name="property_type" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">All Types</option>
+                            @foreach($propertyTypes as $type)
+                                <option value="{{ $type }}" {{ request('property_type') == $type ? 'selected' : '' }}>
+                                    {{ ucfirst($type) }}
+                                </option>
+                            @endforeach
+                        </select>
+
+                        <select name="bedrooms" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Any Beds</option>
+                            <option value="1" {{ request('bedrooms') == '1' ? 'selected' : '' }}>1+ Bed</option>
+                            <option value="2" {{ request('bedrooms') == '2' ? 'selected' : '' }}>2+ Beds</option>
+                            <option value="3" {{ request('bedrooms') == '3' ? 'selected' : '' }}>3+ Beds</option>
+                            <option value="4" {{ request('bedrooms') == '4' ? 'selected' : '' }}>4+ Beds</option>
+                        </select>
+
+                        <select name="bathrooms" class="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Any Baths</option>
+                            <option value="1" {{ request('bathrooms') == '1' ? 'selected' : '' }}>1+ Bath</option>
+                            <option value="2" {{ request('bathrooms') == '2' ? 'selected' : '' }}>2+ Baths</option>
+                            <option value="3" {{ request('bathrooms') == '3' ? 'selected' : '' }}>3+ Baths</option>
+                        </select>
+
+                        <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700">
+                            Search
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Filter Toggle -->
+                <div class="flex items-center justify-between mt-4">
+                    <div class="flex items-center space-x-4">
+                        <button @click="showFilters = !showFilters"
+                                class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                            </svg>
+                            <span>More Filters</span>
+                        </button>
+
+                        <span class="text-gray-500">{{ $properties->total() }} properties found</span>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <button @click="showMap = false"
+                                :class="!showMap ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
+                                class="px-4 py-2 rounded-lg font-medium">
+                            List View
+                        </button>
+                        <button @click="showMap = true"
+                                :class="showMap ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
+                                class="px-4 py-2 rounded-lg font-medium">
+                            Map View
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Filters -->
+        <div x-show="showFilters"
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 transform -translate-y-2"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 transform translate-y-0"
+             x-transition:leave-end="opacity-0 transform -translate-y-2"
+             class="bg-white border-b border-gray-200 px-4 py-6">
+            <div class="max-w-7xl mx-auto">
+                <form method="GET" action="{{ route('public.search') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                        <div class="flex space-x-2">
+                            <input type="number"
+                                   name="min_price"
+                                   placeholder="Min"
+                                   value="{{ request('min_price') }}"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <input type="number"
+                                   name="max_price"
+                                   placeholder="Max"
+                                   value="{{ request('max_price') }}"
+                                   class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Property Type</label>
+                        <select name="property_type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">All Types</option>
+                            @foreach($propertyTypes as $type)
+                                <option value="{{ $type }}" {{ request('property_type') == $type ? 'selected' : '' }}>
+                                    {{ ucfirst($type) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bedrooms</label>
+                        <select name="bedrooms" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Any</option>
+                            <option value="1" {{ request('bedrooms') == '1' ? 'selected' : '' }}>1+</option>
+                            <option value="2" {{ request('bedrooms') == '2' ? 'selected' : '' }}>2+</option>
+                            <option value="3" {{ request('bedrooms') == '3' ? 'selected' : '' }}>3+</option>
+                            <option value="4" {{ request('bedrooms') == '4' ? 'selected' : '' }}>4+</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Bathrooms</label>
+                        <select name="bathrooms" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
+                            <option value="">Any</option>
+                            <option value="1" {{ request('bathrooms') == '1' ? 'selected' : '' }}>1+</option>
+                            <option value="2" {{ request('bathrooms') == '2' ? 'selected' : '' }}>2+</option>
+                            <option value="3" {{ request('bathrooms') == '3' ? 'selected' : '' }}>3+</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex">
+            <!-- Map View -->
+            <div x-show="showMap"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="flex-1 relative">
+                <div id="map" class="map-container"></div>
+
+                <!-- Property Details Panel -->
+                <div x-show="selectedProperty"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="transform translate-x-full"
+                     x-transition:enter-end="transform translate-x-0"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="transform translate-x-0"
+                     x-transition:leave-end="transform translate-x-full"
+                     class="absolute top-4 right-4 w-96 bg-white rounded-lg shadow-lg border border-gray-200 max-h-96 overflow-y-auto">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-lg font-semibold text-gray-900" x-text="selectedProperty?.title"></h3>
+                            <button @click="selectedProperty = null" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="mb-3">
+                            <img :src="selectedProperty?.image || '/images/placeholder.jpg'"
+                                 :alt="selectedProperty?.title"
+                                 class="w-full h-32 object-cover rounded-lg">
+                        </div>
+
+                        <div class="text-2xl font-bold text-indigo-600 mb-2" x-text="selectedProperty?.price"></div>
+
+                        <div class="text-gray-600 mb-2" x-text="selectedProperty?.address"></div>
+
+                        <div class="flex items-center space-x-4 text-sm text-gray-500 mb-4">
+                            <span x-text="selectedProperty?.bedrooms + ' beds'"></span>
+                            <span x-text="selectedProperty?.bathrooms + ' baths'"></span>
+                            <span x-text="selectedProperty?.property_type"></span>
+                        </div>
+
+                        <a :href="selectedProperty?.url"
+                           class="block w-full bg-indigo-600 text-white text-center py-2 rounded-lg font-medium hover:bg-indigo-700">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List View -->
+            <div x-show="!showMap"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="flex-1 p-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($properties as $property)
+                            <div class="property-card bg-white rounded-lg shadow-md overflow-hidden">
+                                <div class="relative">
+                                    @if($property->featured_image)
+                                        <img src="{{ asset('storage/' . $property->featured_image) }}"
+                                             alt="{{ $property->title }}"
+                                             class="w-full h-48 object-cover">
+                                    @else
+                                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                            </svg>
+                                        </div>
+                                    @endif
+                                    <div class="absolute top-2 right-2 bg-indigo-600 text-white px-2 py-1 rounded text-sm font-medium">
+                                        {{ $property->formatted_price }}
+                                    </div>
+                                </div>
+
+                                <div class="p-4">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $property->title }}</h3>
+                                    <p class="text-gray-600 mb-3">{{ $property->full_address }}</p>
+
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                            <span>{{ $property->bedrooms }} beds</span>
+                                            <span>{{ $property->bathrooms }} baths</span>
+                                            <span>{{ ucfirst($property->property_type) }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-500">Listed by {{ $property->user->name }}</span>
+                                        <a href="{{ route('public.property.show', $property->slug) }}"
+                                           class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Pagination -->
+                    @if($properties->hasPages())
+                        <div class="mt-8">
+                            {{ $properties->links() }}
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test if Leaflet is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, Leaflet available:', typeof L !== 'undefined');
+        });
+        
+        // Initialize map when Alpine.js is ready
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('mapData', () => ({
+                showMap: true,
+                showFilters: false,
+                selectedProperty: null,
+                map: null,
+                markers: [],
+                properties: [],
+                loading: false,
+                filters: {
+                    location: '{{ request('location', '') }}',
+                    min_price: '{{ request('min_price', '') }}',
+                    max_price: '{{ request('max_price', '') }}',
+                    property_type: '{{ request('property_type', '') }}',
+                    bedrooms: '{{ request('bedrooms', '') }}',
+                    bathrooms: '{{ request('bathrooms', '') }}'
+                },
+
+                init() {
+                    // Wait for Alpine.js to be fully initialized
+                    this.$nextTick(() => {
+                        this.initMap();
+                        this.loadProperties();
+                    });
+                                },
+
+                // Watch for map view changes
+                showMap: {
+                    handler(newVal) {
+                        if (newVal && !this.map) {
+                            this.$nextTick(() => {
+                                this.initMap();
+                                this.loadProperties();
+                            });
+                        }
+                    }
+                },
+
+                initMap() {
+                    console.log('Initializing map...');
+                    console.log('Leaflet available:', typeof L !== 'undefined');
+                    
+                    const mapContainer = document.getElementById('map');
+                    console.log('Map container:', mapContainer);
+                    console.log('Map container dimensions:', mapContainer?.offsetWidth, 'x', mapContainer?.offsetHeight);
+                    
+                    if (!mapContainer) {
+                        console.error('Map container not found!');
+                        return;
+                    }
+                    
+                    if (typeof L === 'undefined') {
+                        console.error('Leaflet not loaded!');
+                        return;
+                    }
+                    
+                    // Initialize the map centered on the actual property location
+                    this.map = L.map('map').setView([30.2639, -81.5246], 14); // Georgetown, Jacksonville, FL
+                    console.log('Map initialized:', this.map);
+
+                    // Add OpenStreetMap tiles
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(this.map);
+                    console.log('Map tiles added');
+                },
+
+                async loadProperties() {
+                    try {
+                        this.loading = true;
+                        console.log('Loading properties...');
+                        const response = await fetch('{{ route("public.search.map-properties") }}');
+                        this.properties = await response.json();
+                        console.log('Properties loaded:', this.properties.length, 'properties');
+
+                        // Clear existing markers
+                        this.markers.forEach(marker => this.map.removeLayer(marker));
+                        this.markers = [];
+
+                                                // Add markers for each property
+                        this.properties.forEach(property => {
+                            console.log('Property:', property.title, 'Position:', property.position);
+
+                            // Always create a marker, even with fallback coordinates
+                            const marker = L.marker([property.position.lat, property.position.lng])
+                                .addTo(this.map)
+                                .bindPopup(`
+                                    <div class="property-popup">
+                                        <img src="${property.image || '/images/placeholder.jpg'}" alt="${property.title}">
+                                        <h3 class="font-semibold text-lg mt-2">${property.title}</h3>
+                                        <p class="text-indigo-600 font-bold text-lg">${property.price}</p>
+                                        <p class="text-gray-600 text-sm">${property.address}</p>
+                                        <div class="flex items-center space-x-4 text-sm text-gray-500 mt-2">
+                                            <span>${property.bedrooms} beds</span>
+                                            <span>${property.bathrooms} baths</span>
+                                            <span>${property.property_type}</span>
+                                        </div>
+                                        <a href="${property.url}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded mt-3 font-medium">
+                                            View Details
+                                        </a>
+                                    </div>
+                                `);
+
+                            marker.on('click', () => {
+                                this.selectedProperty = property;
+                            });
+
+                            this.markers.push(marker);
+                        });
+
+                        // Fit map to show all markers if there are any
+                        if (this.markers.length > 0) {
+                            const group = new L.featureGroup(this.markers);
+                            this.map.fitBounds(group.getBounds().pad(0.1));
+                        }
+
+                    } catch (error) {
+                        console.error('Error loading properties:', error);
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            }));
+        });
+    </script>
+</body>
+</html>

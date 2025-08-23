@@ -82,6 +82,7 @@
                     <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-32 h-auto">
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
+                    <a href="{{ route('public.search') }}" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Search Properties</a>
                     <a href="#features" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Features</a>
                     <a href="#pricing" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Pricing</a>
                     <a href="{{ route('docs.getting-started') }}" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors">Documentation</a>

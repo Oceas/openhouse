@@ -2,7 +2,7 @@
 
 ## Overview
 Your Open House application now has a complete subscription system with:
-- $4.99/month pricing
+- $9.99/month pricing
 - 14-day free trial for all new users
 - Secure Stripe integration via Laravel Cashier
 
@@ -20,7 +20,7 @@ Your Open House application now has a complete subscription system with:
 3. Set name: "Open House Professional"
 4. Set description: "Full access to Open House property management platform"
 5. Set pricing model: **Recurring**
-6. Set price: **$4.99 USD monthly**
+6. Set price: **$9.99 USD monthly**
 7. Copy the **Price ID** (starts with `price_`)
 
 ### 3. Set Environment Variables

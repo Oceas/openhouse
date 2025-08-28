@@ -91,7 +91,7 @@
     <p>Open House offers a simple, transparent pricing model:</p>
     <ul>
         <li><strong>14-Day Free Trial:</strong> No credit card required to start</li>
-        <li><strong>$4.99/month:</strong> After your trial period</li>
+        <li><strong>$9.99/month:</strong> After your trial period</li>
         <li><strong>Cancel Anytime:</strong> No long-term contracts</li>
         <li><strong>All Features Included:</strong> No hidden fees or upsells</li>
     </ul>

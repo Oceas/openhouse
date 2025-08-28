@@ -30,7 +30,7 @@
     </ul>
 
     <h3>What happens after my trial ends?</h3>
-    <p>After your 14-day trial, you'll need to add a payment method to continue using Open House. Your subscription will be $4.99/month and you can cancel anytime.</p>
+    <p>After your 14-day trial, you'll need to add a payment method to continue using Open House. Your subscription will be $9.99/month and you can cancel anytime.</p>
 
     <h2>Property Management</h2>
 
@@ -131,7 +131,7 @@
     <h2>Billing and Subscriptions</h2>
 
     <h3>How much does Open House cost?</h3>
-    <p>Open House costs $4.99/month after your 14-day free trial. This includes:</p>
+    <p>Open House costs $9.99/month after your 14-day free trial. This includes:</p>
     <ul>
         <li>Unlimited properties</li>
         <li>Unlimited visitor tracking</li>

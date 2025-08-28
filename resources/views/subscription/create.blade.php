@@ -176,7 +176,7 @@
                                 <p class="text-lg text-gray-600 mb-8">Perfect for real estate professionals and teams</p>
 
                                 <div class="flex items-baseline justify-center gap-x-2 mb-6">
-                                    <span class="text-6xl font-bold text-gray-900">$4.99</span>
+                                    <span class="text-6xl font-bold text-gray-900">$9.99</span>
                                     <span class="text-xl font-semibold text-gray-600">/month</span>
                                 </div>
 

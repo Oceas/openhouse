@@ -56,7 +56,7 @@
         </style>
     </head>
     <body class="gradient-bg font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0">
             <!-- Header -->
             <div class="mb-8 p-4">
                 <a href="/" class="flex justify-center">
@@ -64,9 +64,13 @@
                 </a>
             </div>
 
-            <!-- Main Card -->
-            <div class="w-full sm:max-w-md px-8 py-8 bg-white dark:bg-gray-800 card-shadow rounded-2xl border border-gray-200 dark:border-gray-700">
-                {{ $slot }}
+            <!-- Main Content -->
+            <div class="w-full max-w-none px-4 sm:px-6 lg:px-8">
+                @isset($slot)
+                    {{ $slot }}
+                @else
+                    @yield('content')
+                @endisset
             </div>
 
             <!-- Footer -->

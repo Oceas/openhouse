@@ -45,6 +45,8 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect to subscription page instead of dashboard
+        // This ensures users set up their subscription from day one
+        return redirect(route('subscription.create', absolute: false));
     }
 }

@@ -110,10 +110,8 @@ class User extends Authenticatable
                 $user->id = Uuid::uuid4()->toString();
             }
 
-            // Set trial period to 14 days from now
-            if (empty($user->trial_ends_at)) {
-                $user->trial_ends_at = now()->addDays(14);
-            }
+            // No trial period - users must subscribe immediately
+            // Trial is handled by Stripe during checkout
         });
     }
 
@@ -122,26 +120,22 @@ class User extends Authenticatable
      */
     public function hasAccess(): bool
     {
-        return $this->onTrial() || $this->subscribed('default');
+        return $this->subscribed('default');
     }
 
     /**
-     * Determine if the user is on trial
+     * Determine if the user is on trial (always false - no trial without subscription)
      */
     public function onTrial(): bool
     {
-        return $this->trial_ends_at && $this->trial_ends_at->isFuture();
+        return false;
     }
 
     /**
-     * Get the number of trial days remaining
+     * Get the number of trial days remaining (always 0)
      */
     public function trialDaysRemaining(): int
     {
-        if (!$this->onTrial()) {
-            return 0;
-        }
-
-        return max(0, now()->diffInDays($this->trial_ends_at, false));
+        return 0;
     }
 }

@@ -24,6 +24,9 @@ Route::get('/p/{slug}', [App\Http\Controllers\PublicPropertyController::class, '
 Route::get('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'showSigninForm'])->name('public.property.signin.form');
 Route::post('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'store'])->name('public.property.signin');
 
+// Stripe Webhook
+Route::post('/stripe/webhook', [App\Http\Controllers\WebhookController::class, 'handleWebhook'])->name('cashier.webhook');
+
 // Documentation routes
 Route::get('/docs/getting-started', function () {
     return view('docs.getting-started');

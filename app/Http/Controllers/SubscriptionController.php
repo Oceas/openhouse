@@ -16,9 +16,8 @@ class SubscriptionController extends Controller
 
         return view('subscription.create', [
             'user' => $user,
-            'trialDaysRemaining' => $user->trialDaysRemaining(),
-            'onTrial' => $user->onTrial(),
             'hasSubscription' => $user->subscribed('default'),
+            'isNewUser' => $user->created_at->diffInMinutes(now()) < 5, // Show welcome message for users who just registered
         ]);
     }
 
@@ -37,7 +36,6 @@ class SubscriptionController extends Controller
         try {
             $checkout = $user
                 ->newSubscription('default', config('services.stripe.price_id'))
-                ->trialDays(14) // 14 day trial
                 ->allowPromotionCodes()
                 ->checkout([
                     'success_url' => route('subscription.success'),
@@ -60,7 +58,31 @@ class SubscriptionController extends Controller
      */
     public function success()
     {
-        return view('subscription.success');
+        $user = Auth::user();
+
+        // Check if user has a subscription
+        if ($user->subscribed('default')) {
+            return view('subscription.success');
+        }
+
+        // If no subscription found, check if they have a Stripe customer ID
+        if ($user->hasStripeId()) {
+            // Try to sync the subscription from Stripe
+            try {
+                $user->syncStripeCustomerDetails();
+
+                // Check again after sync
+                if ($user->subscribed('default')) {
+                    return view('subscription.success');
+                }
+            } catch (\Exception $e) {
+                // Log the error but continue
+                \Log::error('Failed to sync Stripe customer: ' . $e->getMessage());
+            }
+        }
+
+        // If still no subscription, show a pending page
+        return view('subscription.pending');
     }
 
     /**

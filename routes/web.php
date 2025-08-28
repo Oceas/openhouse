@@ -25,7 +25,9 @@ Route::get('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::cl
 Route::post('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'store'])->name('public.property.signin');
 
 // Stripe Webhook
-Route::post('/stripe/webhook', [App\Http\Controllers\WebhookController::class, 'handleWebhook'])->name('cashier.webhook');
+Route::post('/stripe/webhook', [App\Http\Controllers\WebhookController::class, 'handleWebhook'])
+    ->name('cashier.webhook')
+    ->withoutMiddleware([\Laravel\Cashier\Http\Middleware\VerifyWebhookSignature::class]);
 
 // Documentation routes
 Route::get('/docs/getting-started', function () {

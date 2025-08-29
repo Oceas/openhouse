@@ -90,11 +90,6 @@
                         <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-32 h-auto">
                     </a>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <a href="{{ route('welcome') }}" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 font-medium">Sign In</a>
-                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700">Get Started</a>
-                </div>
             </div>
         </div>
     </nav>
@@ -121,7 +116,7 @@
                             <option value="">All Types</option>
                             @foreach($propertyTypes as $type)
                                 <option value="{{ $type }}" {{ request('property_type') == $type ? 'selected' : '' }}>
-                                    {{ ucfirst($type) }}
+                                    {{ str_replace('_', ' ', ucfirst($type)) }}
                                 </option>
                             @endforeach
                         </select>
@@ -210,7 +205,7 @@
                             <option value="">All Types</option>
                             @foreach($propertyTypes as $type)
                                 <option value="{{ $type }}" {{ request('property_type') == $type ? 'selected' : '' }}>
-                                    {{ ucfirst($type) }}
+                                    {{ str_replace('_', ' ', ucfirst($type)) }}
                                 </option>
                             @endforeach
                         </select>
@@ -338,9 +333,9 @@
 
                                     <div class="flex items-center justify-between mb-4">
                                         <div class="flex items-center space-x-4 text-sm text-gray-500">
-                                            <span>{{ $property->bedrooms }} beds</span>
-                                            <span>{{ $property->bathrooms }} baths</span>
-                                            <span>{{ ucfirst($property->property_type) }}</span>
+                                            <span>{{ $property->bedrooms ?? 'N/A' }} beds</span>
+                                            <span>{{ $property->total_bathrooms ?? $property->bathrooms ?? 'N/A' }} baths</span>
+                                            <span>{{ str_replace('_', ' ', ucfirst($property->property_type)) }}</span>
                                         </div>
                                     </div>
 
@@ -441,11 +436,14 @@
                         }).addTo(this.map);
                         console.log('Map tiles added');
                         
-                        // Add a test marker to verify map is working
-                        const testMarker = L.marker([30.2639, -81.5246])
+                        // Map is ready for property markers
+                        console.log('Map ready for property markers');
+                        
+                        // Add a simple marker to ensure map is working
+                        const simpleMarker = L.marker([30.2639, -81.5246])
                             .addTo(this.map)
-                            .bindPopup('Test marker - Anderson House location');
-                        console.log('Test marker added');
+                            .bindPopup('Anderson House - Click for details');
+                        console.log('Simple marker added to ensure map functionality');
                     } catch (error) {
                         console.error('Error initializing map:', error);
                     }
@@ -458,6 +456,7 @@
                         const response = await fetch('{{ route("public.search.map-properties") }}');
                         this.properties = await response.json();
                         console.log('Properties loaded:', this.properties.length, 'properties');
+                        console.log('First property:', this.properties[0]);
 
                         // Only proceed if map is initialized
                         if (!this.map) {
@@ -472,7 +471,8 @@
                         // Add markers for each property
                         this.properties.forEach(property => {
                             try {
-                                console.log('Property:', property.title, 'Position:', property.position);
+                                console.log('Processing property:', property.title);
+                                console.log('Property position:', property.position);
 
                                 // Check if coordinates are valid
                                 if (!property.position || !property.position.lat || !property.position.lng) {
@@ -488,17 +488,35 @@
                                 const marker = L.marker([lat, lng])
                                 .addTo(this.map)
                                 .bindPopup(`
-                                    <div class="property-popup">
-                                        <img src="${property.image || '/images/placeholder.jpg'}" alt="${property.title}">
-                                        <h3 class="font-semibold text-lg mt-2">${property.title}</h3>
-                                        <p class="text-indigo-600 font-bold text-lg">${property.price}</p>
-                                        <p class="text-gray-600 text-sm">${property.address}</p>
-                                        <div class="flex items-center space-x-4 text-sm text-gray-500 mt-2">
-                                            <span>${property.bedrooms || 0} beds</span>
-                                            <span>${property.bathrooms || 0} baths</span>
-                                            <span>${property.property_type}</span>
+                                    <div class="property-popup" style="max-width: 280px;">
+                                        <div class="mb-3">
+                                            <img src="${property.image || '/images/placeholder.jpg'}" alt="${property.title}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px;">
                                         </div>
-                                        <a href="${property.url}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded mt-3 font-medium">
+                                        <h3 class="font-semibold text-lg mb-1" style="color: #1f2937;">${property.title}</h3>
+                                        <p class="text-indigo-600 font-bold text-lg mb-2">${property.price}</p>
+                                        <p class="text-gray-600 text-sm mb-3" style="line-height: 1.4;">${property.address}</p>
+                                        <div class="flex items-center space-x-3 text-sm text-gray-500 mb-3">
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                                                </svg>
+                                                ${property.bedrooms || 'N/A'} beds
+                                            </span>
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                                                </svg>
+                                                ${property.bathrooms || 'N/A'} baths
+                                            </span>
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                                </svg>
+                                                ${property.property_type.replace(/_/g, ' ')}
+                                            </span>
+                                        </div>
+                                        <a href="${property.url}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded font-medium hover:bg-indigo-700 transition-colors">
                                             View Details
                                         </a>
                                     </div>
@@ -509,7 +527,7 @@
                             });
 
                             this.markers.push(marker);
-                            console.log('Marker created and added to map');
+                            console.log('Marker created and added to map for:', property.title);
                             } catch (error) {
                                 console.error('Error creating marker for property:', property.title, error);
                             }
@@ -519,10 +537,20 @@
                         if (this.markers.length > 0) {
                             console.log('Fitting map to show', this.markers.length, 'markers');
                             const group = new L.featureGroup(this.markers);
-                            this.map.fitBounds(group.getBounds().pad(0.1));
+                            const bounds = group.getBounds();
+                            
+                            // If we have multiple markers, fit to bounds with padding
+                            if (this.markers.length > 1) {
+                                this.map.fitBounds(bounds.pad(0.15));
+                            } else {
+                                // For single marker, center on it with appropriate zoom
+                                this.map.setView(bounds.getCenter(), 14);
+                            }
                             console.log('Map bounds adjusted');
                         } else {
                             console.warn('No markers were created');
+                            // If no markers, center on default location
+                            this.map.setView([30.2639, -81.5246], 10);
                         }
 
                     } catch (error) {
@@ -534,5 +562,21 @@
             }));
         });
     </script>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-500 text-sm">
+                    © 2024 Open House. All rights reserved.
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 font-medium text-sm">
+                        Agent Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

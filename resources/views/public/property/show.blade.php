@@ -228,9 +228,6 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('public.search') }}" class="text-gray-600 hover:text-gray-900 font-medium">Search Properties</a>
-                    <a href="{{ route('welcome') }}" class="text-gray-600 hover:text-gray-900 font-medium">Home</a>
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 font-medium">Sign In</a>
-                    <a href="{{ route('register') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-indigo-700">Get Started</a>
                 </div>
             </div>
         </div>
@@ -530,8 +527,17 @@
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; {{ date('Y') }} Open House Management System. All rights reserved.</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <div class="text-gray-300 text-sm">
+                    &copy; {{ date('Y') }} Open House Management System. All rights reserved.
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('login') }}" class="text-gray-300 hover:text-white font-medium text-sm">
+                        Agent Sign In
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
 

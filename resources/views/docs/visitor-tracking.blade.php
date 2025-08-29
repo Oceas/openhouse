@@ -100,43 +100,84 @@
         <li>Sign-in recency (Recent visitors first)</li>
     </ul>
 
-    <h2>Exporting Visitor Data</h2>
+    <h2>Open House Management</h2>
 
-    <h3>Export Options</h3>
-    <p>Export visitor data for use in other systems:</p>
+    <h3>Setting Up Open Houses</h3>
+    <p>Plan and manage your open house events:</p>
     <ul>
-        <li><strong>CSV Export:</strong> Download as spreadsheet file</li>
-        <li><strong>PDF Report:</strong> Generate professional visitor report</li>
-        <li><strong>CRM Integration:</strong> Import into your CRM system</li>
-        <li><strong>Email Lists:</strong> Export email addresses for marketing</li>
+        <li><strong>Schedule Events:</strong> Set date and time for open houses</li>
+        <li><strong>Visitor Expectations:</strong> Estimate expected attendance</li>
+        <li><strong>Marketing Materials:</strong> Create promotional content</li>
+        <li><strong>Follow-up Plans:</strong> Plan your post-event strategy</li>
     </ul>
 
-    <h3>Export Formats</h3>
-    <p>Choose the format that works best for your workflow:</p>
+    <h3>During Open Houses</h3>
+    <p>Make the most of your open house events:</p>
     <ul>
-        <li><strong>CSV:</strong> For spreadsheet applications like Excel</li>
-        <li><strong>PDF:</strong> For printing and sharing with clients</li>
-        <li><strong>JSON:</strong> For API integrations</li>
+        <li><strong>Digital Sign-in:</strong> Encourage all visitors to sign in</li>
+        <li><strong>Engage Visitors:</strong> Answer questions and provide information</li>
+        <li><strong>Collect Feedback:</strong> Get visitor impressions and feedback</li>
+        <li><strong>Qualify Leads:</strong> Assess visitor interest and readiness</li>
     </ul>
 
-    <h2>Privacy and Compliance</h2>
+    <h2>Follow-up Strategies</h2>
 
-    <h3>Data Protection</h3>
-    <p>Open House is committed to protecting visitor privacy:</p>
+    <h3>Immediate Follow-up (Same Day)</h3>
+    <p>Connect with visitors quickly:</p>
     <ul>
-        <li><strong>Secure Storage:</strong> All data is encrypted and securely stored</li>
-        <li><strong>Privacy Notice:</strong> Clear privacy policy for visitors</li>
-        <li><strong>Data Retention:</strong> Configurable data retention policies</li>
-        <li><strong>GDPR Compliance:</strong> Meets international privacy standards</li>
+        <li><strong>Thank You Messages:</strong> Send personalized thank you emails</li>
+        <li><strong>Property Information:</strong> Provide additional property details</li>
+        <li><strong>Next Steps:</strong> Outline the buying process</li>
+        <li><strong>Contact Information:</strong> Provide your direct contact details</li>
     </ul>
 
-    <h3>Visitor Consent</h3>
-    <p>Visitors are informed about:</p>
+    <h3>Ongoing Nurturing</h3>
+    <p>Build relationships with potential buyers:</p>
     <ul>
-        <li>What information is being collected</li>
-        <li>How the information will be used</li>
-        <li>Their rights regarding their data</li>
-        <li>Contact information for questions</li>
+        <li><strong>Regular Updates:</strong> Keep them informed about the property</li>
+        <li><strong>Market Information:</strong> Share relevant market insights</li>
+        <li><strong>Similar Properties:</strong> Suggest other properties they might like</li>
+        <li><strong>Personal Touch:</strong> Send personalized messages and calls</li>
+    </ul>
+
+    <h2>Analytics and Reporting</h2>
+
+    <h3>Visitor Analytics</h3>
+    <p>Track the performance of your open houses:</p>
+    <ul>
+        <li><strong>Attendance Numbers:</strong> Track how many people visit</li>
+        <li><strong>Sign-in Rates:</strong> Percentage of visitors who sign in</li>
+        <li><strong>Lead Quality:</strong> Assess the quality of generated leads</li>
+        <li><strong>Conversion Rates:</strong> Track visitor-to-lead conversions</li>
+    </ul>
+
+    <h3>Performance Metrics</h3>
+    <p>Monitor key performance indicators:</p>
+    <ul>
+        <li><strong>Open House Success:</strong> Which events generate the most leads</li>
+        <li><strong>Property Interest:</strong> Which properties attract the most visitors</li>
+        <li><strong>Follow-up Effectiveness:</strong> Track follow-up response rates</li>
+        <li><strong>Lead Conversion:</strong> Monitor lead-to-client conversion rates</li>
+    </ul>
+
+    <h2>Data Export and Integration</h2>
+
+    <h3>Exporting Visitor Data</h3>
+    <p>Export visitor information for external use:</p>
+    <ul>
+        <li><strong>CSV Format:</strong> Download visitor lists in spreadsheet format</li>
+        <li><strong>CRM Integration:</strong> Import data into your CRM system</li>
+        <li><strong>Email Marketing:</strong> Use data for email campaigns</li>
+        <li><strong>Reporting:</strong> Create custom reports and analysis</li>
+    </ul>
+
+    <h3>Data Management</h3>
+    <p>Keep your visitor data organized:</p>
+    <ul>
+        <li><strong>Regular Cleanup:</strong> Remove outdated or duplicate entries</li>
+        <li><strong>Data Backup:</strong> Regularly backup your visitor data</li>
+        <li><strong>Privacy Compliance:</strong> Ensure compliance with data protection laws</li>
+        <li><strong>Data Security:</strong> Protect visitor information appropriately</li>
     </ul>
 
     <h2>Best Practices</h2>
@@ -144,92 +185,38 @@
     <h3>Maximizing Sign-ins</h3>
     <ul>
         <li>Make the sign-in process quick and easy</li>
-        <li>Offer incentives for signing in (property updates, etc.)</li>
-        <li>Display the sign-in form prominently</li>
-        <li>Use tablets or computers at open houses</li>
-        <li>Train staff to encourage sign-ins</li>
+        <li>Offer incentives for signing in (property details, market updates)</li>
+        <li>Have tablets or computers available for digital sign-in</li>
+        <li>Train your team to encourage sign-ins</li>
+        <li>Follow up with visitors who don't sign in</li>
     </ul>
 
-    <h3>Follow-up Strategies</h3>
+    <h3>Improving Lead Quality</h3>
     <ul>
-        <li>Follow up within 24 hours of the open house</li>
-        <li>Personalize follow-up based on visitor information</li>
-        <li>Use multiple contact methods (email, phone, text)</li>
-        <li>Provide additional property information</li>
-        <li>Schedule follow-up appointments</li>
+        <li>Ask qualifying questions during the sign-in process</li>
+        <li>Engage visitors in conversation to assess interest</li>
+        <li>Provide valuable information to build trust</li>
+        <li>Follow up promptly with qualified leads</li>
+        <li>Track and analyze your follow-up success rates</li>
     </ul>
 
-    <h3>Data Management</h3>
+    <h3>Technology Tips</h3>
     <ul>
-        <li>Regularly review and update visitor information</li>
-        <li>Export data regularly for backup</li>
-        <li>Clean up old or duplicate entries</li>
-        <li>Track follow-up activities and outcomes</li>
-        <li>Analyze visitor patterns and trends</li>
-    </ul>
-
-    <h2>Analytics and Reporting</h2>
-
-    <h3>Visitor Analytics</h3>
-    <p>Track key metrics for your open houses:</p>
-    <ul>
-        <li><strong>Total Visitors:</strong> Number of people who signed in</li>
-        <li><strong>Conversion Rate:</strong> Percentage who became leads</li>
-        <li><strong>Interest Distribution:</strong> Breakdown by interest level</li>
-        <li><strong>Timeline Analysis:</strong> When visitors plan to buy</li>
-        <li><strong>Property Performance:</strong> Which properties attract more visitors</li>
-    </ul>
-
-    <h3>Custom Reports</h3>
-    <p>Generate reports for different purposes:</p>
-    <ul>
-        <li><strong>Weekly Reports:</strong> Regular updates on visitor activity</li>
-        <li><strong>Property Reports:</strong> Performance by individual property</li>
-        <li><strong>Lead Reports:</strong> Qualified leads and follow-up status</li>
-        <li><strong>Trend Reports:</strong> Long-term visitor patterns</li>
-    </ul>
-
-    <h2>Integration with Other Tools</h2>
-
-    <h3>CRM Integration</h3>
-    <p>Connect visitor data with your CRM system:</p>
-    <ul>
-        <li>Automatic lead creation in your CRM</li>
-        <li>Sync visitor information and notes</li>
-        <li>Track follow-up activities</li>
-        <li>Generate reports across systems</li>
-    </ul>
-
-    <h3>Email Marketing</h3>
-    <p>Use visitor data for email campaigns:</p>
-        <li>Welcome emails for new visitors</li>
-        <li>Property updates and new listings</li>
-        <li>Market updates and insights</li>
-        <li>Follow-up sequences</li>
+        <li>Ensure reliable internet connection at open houses</li>
+        <li>Have backup sign-in methods available</li>
+        <li>Test the sign-in process before each event</li>
+        <li>Keep devices charged and ready</li>
+        <li>Train staff on the visitor tracking system</li>
     </ul>
 
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-        <h3 class="text-blue-900 font-semibold mb-2">Pro Tips</h3>
-        <ul class="text-blue-800 space-y-1">
-            <li>• Follow up with high-interest visitors within 2 hours</li>
-            <li>• Use visitor data to personalize your follow-up approach</li>
-            <li>• Export visitor data weekly for backup and analysis</li>
-            <li>• Track which properties generate the most qualified leads</li>
-            <li>• Use visitor feedback to improve your open house presentations</li>
-        </ul>
+        <h3 class="text-lg font-semibold text-blue-900 mb-2">Pro Tip</h3>
+        <p class="text-blue-800">The key to successful visitor tracking is making it a seamless part of the open house experience. Encourage all visitors to sign in by explaining the benefits they'll receive, such as property updates and market information.</p>
     </div>
 
-    <div class="mt-8 pt-8 border-t border-gray-200">
-        <h2>Next Steps</h2>
-        <p>Now that you understand visitor tracking, explore other features:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <a href="/docs/subscriptions" class="block bg-indigo-600 text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-700 transition-colors">
-                Learn About Subscriptions
-            </a>
-            <a href="/docs/faq" class="block bg-gray-100 text-gray-700 px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
-                Frequently Asked Questions
-            </a>
-        </div>
+    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mt-6">
+        <h3 class="text-lg font-semibold text-yellow-900 mb-2">Important Note</h3>
+        <p class="text-yellow-800">Always respect visitor privacy and comply with local data protection laws. Be transparent about how you'll use their information and provide clear opt-out options.</p>
     </div>
 </div>
 @endsection

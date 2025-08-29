@@ -139,7 +139,7 @@
                         <p class="text-gray-600">Interested in this property? Sign in to receive more information.</p>
                     </div>
 
-                    <form id="visitor-signin-form" class="space-y-6">
+                    <form id="visitor-signin-form" class="space-y-6" method="POST" action="{{ route('public.property.signin', $property->slug) }}">
                         @csrf
 
                         <!-- Basic Information -->
@@ -267,89 +267,46 @@
                         </button>
                     </form>
 
-                    <div id="signin-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                        <div class="flex items-center">
-                            <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                            </svg>
-                            <p class="text-green-800 font-medium">Thank you for signing in! We'll be in touch soon.</p>
+                    @if(session('success'))
+                        <div class="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-green-800 font-medium">{{ session('success') }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
-                    <div id="signin-error" class="hidden mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <div class="flex items-center">
-                            <svg class="h-5 w-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                            </svg>
-                            <p class="text-red-800 font-medium" id="error-message"></p>
+                    @if(session('error'))
+                        <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex items-center">
+                                <svg class="h-5 w-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-red-800 font-medium">{{ session('error') }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <svg class="h-5 w-5 text-red-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <p class="text-red-800 font-medium">Please check your information and try again.</p>
+                            </div>
+                            <ul class="text-red-700 text-sm space-y-1">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Handle visitor sign-in form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const signinForm = document.getElementById('visitor-signin-form');
-            if (signinForm) {
-                signinForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(signinForm);
-                    const submitButton = signinForm.querySelector('button[type="submit"]');
-                    const successDiv = document.getElementById('signin-success');
-                    const errorDiv = document.getElementById('signin-error');
-                    const errorMessage = document.getElementById('error-message');
-
-                    // Disable submit button and show loading state
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'Signing In...';
-
-                    // Hide previous messages
-                    successDiv.classList.add('hidden');
-                    errorDiv.classList.add('hidden');
-
-                    fetch('{{ route("public.property.signin", $property->slug) }}', {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest',
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Show success message
-                            successDiv.classList.remove('hidden');
-                            signinForm.reset();
-
-                            // Scroll to success message
-                            successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        } else {
-                            // Show error message
-                            errorMessage.textContent = data.message || 'An error occurred. Please try again.';
-                            errorDiv.classList.remove('hidden');
-
-                            // Scroll to error message
-                            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        errorMessage.textContent = 'An error occurred. Please try again.';
-                        errorDiv.classList.remove('hidden');
-                        errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    })
-                    .finally(() => {
-                        // Re-enable submit button
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Sign In';
-                    });
-                });
-            }
-        });
-    </script>
 </body>
 </html>

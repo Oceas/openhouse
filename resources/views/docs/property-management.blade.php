@@ -17,7 +17,7 @@
         <li><strong>Add New Property:</strong> Click the "Add Property" button</li>
         <li><strong>Fill Basic Information:</strong> Enter property details in the form</li>
         <li><strong>Upload Images:</strong> Add featured image and gallery photos</li>
-        <li><strong>Write Description:</strong> Use the rich text editor for detailed descriptions</li>
+        <li><strong>Write Description:</strong> Create detailed property descriptions</li>
         <li><strong>Save Property:</strong> Click "Create Property" to save</li>
     </ol>
 
@@ -25,7 +25,7 @@
     <p>The following fields are required when creating a property:</p>
     <ul>
         <li><strong>Title:</strong> A compelling property title</li>
-        <li><strong>Price:</strong> Property listing price</li>
+        <li><strong>List Price:</strong> Property listing price</li>
         <li><strong>Address:</strong> Street address, city, state, and ZIP code</li>
         <li><strong>Property Type:</strong> Single family, condo, townhouse, etc.</li>
         <li><strong>Status:</strong> Active, Pending, or Sold</li>
@@ -46,8 +46,17 @@
     <ul>
         <li><strong>Property Features:</strong> List amenities and special features</li>
         <li><strong>Virtual Tour URL:</strong> Link to virtual tour or video</li>
-        <li><strong>Map Coordinates:</strong> Latitude and longitude for mapping</li>
+        <li><strong>Automatic Geocoding:</strong> Properties are automatically mapped</li>
         <li><strong>Custom Fields:</strong> Add any additional information</li>
+    </ul>
+
+    <h2>Automatic Geocoding</h2>
+    <p>Open House automatically generates latitude and longitude coordinates for your properties:</p>
+    <ul>
+        <li><strong>Automatic Processing:</strong> Coordinates are generated when you create or update a property</li>
+        <li><strong>Map Integration:</strong> Properties automatically appear on the interactive search map</li>
+        <li><strong>No Manual Work:</strong> No need to manually enter coordinates</li>
+        <li><strong>Accurate Results:</strong> Uses reliable geocoding services for precise locations</li>
     </ul>
 
     <h2>Image Management</h2>
@@ -79,16 +88,16 @@
         <li>Ensure photos are properly staged</li>
     </ul>
 
-    <h2>Rich Text Descriptions</h2>
+    <h2>Property Descriptions</h2>
 
-    <h3>Using the Editor</h3>
-    <p>Our rich text editor allows you to create compelling property descriptions:</p>
+    <h3>Writing Effective Descriptions</h3>
+    <p>Create compelling property descriptions that attract buyers:</p>
     <ul>
-        <li><strong>Formatting:</strong> Bold, italic, underline, and more</li>
-        <li><strong>Lists:</strong> Bulleted and numbered lists</li>
-        <li><strong>Links:</strong> Add clickable links</li>
-        <li><strong>Headings:</strong> Organize content with headers</li>
-        <li><strong>Undo/Redo:</strong> Easy editing with keyboard shortcuts</li>
+        <li><strong>Compelling Headlines:</strong> Start with an attention-grabbing title</li>
+        <li><strong>Key Features:</strong> Highlight the most important features first</li>
+        <li><strong>Neighborhood Info:</strong> Include nearby amenities and attractions</li>
+        <li><strong>School Information:</strong> Mention nearby schools and districts</li>
+        <li><strong>Engaging Language:</strong> Use descriptive, appealing words</li>
     </ul>
 
     <h3>Description Best Practices</h3>
@@ -99,6 +108,7 @@
         <li>Mention nearby attractions and schools</li>
         <li>Use descriptive, engaging language</li>
         <li>Keep paragraphs short and scannable</li>
+        <li>Include call-to-action phrases</li>
     </ul>
 
     <h2>Property Status Management</h2>
@@ -106,105 +116,85 @@
     <h3>Status Options</h3>
     <ul>
         <li><strong>Active:</strong> Property is available for sale</li>
-        <li><strong>Pending:</strong> Offer accepted, under contract</li>
+        <li><strong>Pending:</strong> Property is under contract</li>
         <li><strong>Sold:</strong> Property has been sold</li>
+        <li><strong>Withdrawn:</strong> Property is no longer on the market</li>
     </ul>
 
-    <h3>Status Updates</h3>
-    <p>Keep your property status current to maintain accurate listings and avoid confusion with potential buyers.</p>
+    <h3>Managing Status Changes</h3>
+    <p>Keep your property status up to date:</p>
+    <ul>
+        <li>Update status as deals progress</li>
+        <li>Set appropriate dates for status changes</li>
+        <li>Add notes about status changes</li>
+        <li>Notify team members of important updates</li>
+    </ul>
 
     <h2>Public Property Pages</h2>
 
-    <h3>Automatic Generation</h3>
-    <p>Every property automatically gets a public page with a unique URL:</p>
+    <h3>Professional Presentation</h3>
+    <p>Each property gets a beautiful public page:</p>
     <ul>
-        <li><strong>URL Format:</strong> <code>yourdomain.com/p/property-slug</code></li>
-        <li><strong>SEO Optimized:</strong> Search engine friendly URLs</li>
-        <li><strong>Mobile Responsive:</strong> Looks great on all devices</li>
-        <li><strong>Social Sharing:</strong> Easy to share on social media</li>
+        <li><strong>Photo Carousel:</strong> Interactive image gallery with lightbox</li>
+        <li><strong>Property Details:</strong> Complete property information</li>
+        <li><strong>Contact Forms:</strong> Easy ways for buyers to reach you</li>
+        <li><strong>Mobile Optimized:</strong> Looks great on all devices</li>
+        <li><strong>SEO Friendly:</strong> Optimized for search engines</li>
     </ul>
 
-    <h3>Public Page Features</h3>
+    <h3>Sharing Properties</h3>
+    <p>Share your properties with potential buyers:</p>
     <ul>
-        <li>Professional photo carousel with lightbox</li>
-        <li>Complete property details and description</li>
-        <li>Contact information and inquiry forms</li>
-        <li>Visitor sign-in integration</li>
-        <li>Map integration (if coordinates provided)</li>
+        <li><strong>Direct Links:</strong> Each property has a unique URL</li>
+        <li><strong>Social Media:</strong> Easy sharing to social platforms</li>
+        <li><strong>Email Integration:</strong> Send property links via email</li>
+        <li><strong>QR Codes:</strong> Generate QR codes for print materials</li>
     </ul>
 
-    <h2>Property Editing</h2>
+    <h2>Property Search & Discovery</h2>
 
-    <h3>Making Changes</h3>
-    <p>You can edit any property at any time:</p>
-    <ol>
-        <li>Navigate to the property in your dashboard</li>
-        <li>Click the "Edit" button</li>
-        <li>Make your changes</li>
-        <li>Save the updates</li>
-    </ol>
-
-    <h3>Bulk Operations</h3>
-    <p>For managing multiple properties:</p>
+    <h3>Interactive Map Search</h3>
+    <p>Your properties appear on our interactive search map:</p>
     <ul>
-        <li>Select multiple properties using checkboxes</li>
-        <li>Update status for multiple properties at once</li>
-        <li>Export property data for external use</li>
+        <li><strong>Map Markers:</strong> Properties show as clickable markers</li>
+        <li><strong>Property Previews:</strong> Click markers to see property details</li>
+        <li><strong>Search Filters:</strong> Buyers can filter by location, price, features</li>
+        <li><strong>Mobile Friendly:</strong> Works perfectly on mobile devices</li>
+    </ul>
+
+    <h3>Search Optimization</h3>
+    <p>Help buyers find your properties:</p>
+    <ul>
+        <li><strong>Complete Information:</strong> Fill out all property fields</li>
+        <li><strong>High-Quality Photos:</strong> Use professional images</li>
+        <li><strong>Detailed Descriptions:</strong> Write comprehensive descriptions</li>
+        <li><strong>Accurate Pricing:</strong> Keep prices current</li>
+        <li><strong>Regular Updates:</strong> Update listings regularly</li>
     </ul>
 
     <h2>Property Analytics</h2>
 
-    <h3>View Tracking</h3>
-    <p>Track how your properties are performing:</p>
+    <h3>Performance Tracking</h3>
+    <p>Track how your properties perform:</p>
     <ul>
-        <li><strong>Page Views:</strong> Number of times the public page was viewed</li>
-        <li><strong>Visitor Sign-ins:</strong> Number of visitors who signed in</li>
-        <li><strong>Inquiries:</strong> Contact form submissions</li>
-        <li><strong>Time on Page:</strong> How long visitors spend viewing</li>
+        <li><strong>View Counts:</strong> See how many people view each property</li>
+        <li><strong>Visitor Sign-ins:</strong> Track open house visitors</li>
+        <li><strong>Lead Generation:</strong> Monitor lead quality and quantity</li>
+        <li><strong>Conversion Rates:</strong> Track visitor-to-lead conversions</li>
     </ul>
 
-    <h2>Export and Integration</h2>
-
-    <h3>PDF Export</h3>
-    <p>Generate professional PDF brochures for each property:</p>
+    <h3>Optimization Tips</h3>
     <ul>
-        <li>Include all property details and photos</li>
-        <li>Professional formatting and layout</li>
-        <li>Perfect for printing and sharing</li>
-        <li>Customizable templates</li>
-    </ul>
-
-    <h3>Data Export</h3>
-    <p>Export property data for use in other systems:</p>
-    <ul>
-        <li>CSV format for spreadsheet applications</li>
-        <li>Include all property fields and images</li>
-        <li>Perfect for MLS integration</li>
-        <li>Backup your property data</li>
+        <li>Monitor which properties get the most views</li>
+        <li>Analyze visitor feedback and questions</li>
+        <li>Adjust pricing based on market response</li>
+        <li>Update photos and descriptions regularly</li>
+        <li>Use analytics to improve your listings</li>
     </ul>
 
     <div class="bg-green-50 border border-green-200 rounded-lg p-6 mt-8">
-        <h3 class="text-green-900 font-semibold mb-2">Pro Tips</h3>
-        <ul class="text-green-800 space-y-1">
-            <li>• Use descriptive, keyword-rich titles for better SEO</li>
-            <li>• Upload at least 10-15 high-quality images per property</li>
-            <li>• Update property status promptly to maintain accuracy</li>
-            <li>• Include virtual tour links when available</li>
-            <li>• Write detailed descriptions that highlight unique features</li>
-        </ul>
-    </div>
-
-    <div class="mt-8 pt-8 border-t border-gray-200">
-        <h2>Next Steps</h2>
-        <p>Now that you understand property management, learn about visitor tracking:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <a href="/docs/visitor-tracking" class="block bg-indigo-600 text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-700 transition-colors">
-                Learn About Visitor Tracking
-            </a>
-            <a href="/docs/api" class="block bg-gray-100 text-gray-700 px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
-                API Reference
-            </a>
-        </div>
+        <h3 class="text-lg font-semibold text-green-900 mb-2">Best Practice</h3>
+        <p class="text-green-800">Take high-quality photos of your properties and write detailed, engaging descriptions. Properties with complete information and professional photos typically receive 3x more views and generate more qualified leads.</p>
     </div>
 </div>
 @endsection

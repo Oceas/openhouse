@@ -12,25 +12,27 @@
     <h2>Getting Started</h2>
 
     <h3>How do I create an account?</h3>
-    <p>Creating an account is easy and free:</p>
+    <p>Creating an account is easy:</p>
     <ol>
         <li>Visit our <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-800">signup page</a></li>
         <li>Enter your name, email, and create a password</li>
         <li>Verify your email address</li>
-        <li>Start your 14-day free trial immediately</li>
+        <li>Start using all features immediately</li>
     </ol>
 
-    <h3>Is there a free trial?</h3>
-    <p>Yes! Every new account comes with a 14-day free trial. You can:</p>
+    <h3>What's included in my subscription?</h3>
+    <p>Your $9.99/month subscription includes:</p>
     <ul>
-        <li>Create unlimited properties</li>
-        <li>Track unlimited visitors</li>
-        <li>Use all features without restrictions</li>
-        <li>No credit card required to start</li>
+        <li>Unlimited property listings</li>
+        <li>Visitor tracking and lead capture</li>
+        <li>Interactive property search with maps</li>
+        <li>Public property pages</li>
+        <li>Analytics and reporting</li>
+        <li>All platform features</li>
     </ul>
 
-    <h3>What happens after my trial ends?</h3>
-    <p>After your 14-day trial, you'll need to add a payment method to continue using Open House. Your subscription will be $9.99/month and you can cancel anytime.</p>
+    <h3>Can I cancel my subscription?</h3>
+    <p>Yes, absolutely! You can cancel your subscription at any time from your account settings. There are no cancellation fees or penalties.</p>
 
     <h2>Property Management</h2>
 
@@ -58,13 +60,8 @@
     </ol>
     <p><strong>Warning:</strong> Deleting a property is permanent and cannot be undone.</p>
 
-    <h3>Can I export my property data?</h3>
-    <p>Yes! You can export property data in several formats:</p>
-    <ul>
-        <li><strong>PDF:</strong> Professional property brochures</li>
-        <li><strong>CSV:</strong> Spreadsheet format for data analysis</li>
-        <li><strong>JSON:</strong> For API integrations</li>
-    </ul>
+    <h3>Do properties automatically appear on the search map?</h3>
+    <p>Yes! When you create or update a property, our system automatically generates latitude and longitude coordinates. Your properties will appear on the interactive search map without any manual work.</p>
 
     <h2>Visitor Tracking</h2>
 
@@ -88,87 +85,56 @@
     </ul>
 
     <h3>Can I export visitor data?</h3>
-    <p>Yes! You can export visitor data in multiple formats:</p>
-    <ul>
-        <li><strong>CSV:</strong> For importing into your CRM</li>
-        <li><strong>PDF:</strong> Professional visitor reports</li>
-        <li><strong>JSON:</strong> For API integrations</li>
-    </ul>
+    <p>Yes! You can export visitor data in CSV format for importing into your CRM or other systems.</p>
 
     <h3>Is visitor data secure?</h3>
     <p>Absolutely! We take data security seriously:</p>
     <ul>
         <li>All data is encrypted in transit and at rest</li>
-        <li>We comply with GDPR and other privacy regulations</li>
-        <li>We never sell or share your visitor data</li>
-        <li>Visitors are informed about data collection</li>
+        <li>We comply with data protection regulations</li>
+        <li>You control your data and can export it anytime</li>
+        <li>We never share your data with third parties</li>
     </ul>
 
-    <h2>Public Listings</h2>
+    <h2>Public Listings & Search</h2>
 
     <h3>How do public property pages work?</h3>
-    <p>Every property automatically gets a public page:</p>
+    <p>Each property automatically gets a public page that anyone can visit:</p>
     <ul>
-        <li>Unique URL for each property</li>
-        <li>Professional, mobile-responsive design</li>
-        <li>Photo carousel with lightbox</li>
-        <li>Complete property details</li>
-        <li>Visitor sign-in integration</li>
+        <li>Beautiful photo galleries with lightbox viewing</li>
+        <li>Complete property details and descriptions</li>
+        <li>Contact forms for interested buyers</li>
+        <li>Mobile-optimized design</li>
+        <li>SEO-friendly URLs</li>
     </ul>
 
-    <h3>Can I customize the public page design?</h3>
-    <p>Currently, public pages use our standard professional design. We're working on customization options for future releases.</p>
-
-    <h3>How do I share a property with potential buyers?</h3>
-    <p>You can share properties in several ways:</p>
+    <h3>How does the interactive search work?</h3>
+    <p>Our interactive search allows buyers to find properties:</p>
     <ul>
-        <li>Copy the public URL and share it directly</li>
-        <li>Use the "Share" button to get social media links</li>
-        <li>Export as PDF and email to prospects</li>
-        <li>Include the link in your marketing materials</li>
+        <li>Map-based search with property markers</li>
+        <li>Filter by location, price, beds, baths, property type</li>
+        <li>Click markers to see property details</li>
+        <li>Works perfectly on mobile devices</li>
     </ul>
 
-    <h2>Billing and Subscriptions</h2>
+    <h3>Can I control which properties are public?</h3>
+    <p>Yes! You can set properties as public or private. Private properties won't appear in search results or have public pages.</p>
 
-    <h3>How much does Open House cost?</h3>
-    <p>Open House costs $9.99/month after your 14-day free trial. This includes:</p>
+    <h2>Analytics & Reporting</h2>
+
+    <h3>What analytics are available?</h3>
+    <p>You can track:</p>
     <ul>
-        <li>Unlimited properties</li>
-        <li>Unlimited visitor tracking</li>
-        <li>All features and updates</li>
-        <li>Email support</li>
+        <li>How many people view each property</li>
+        <li>Visitor sign-ins and lead generation</li>
+        <li>Property performance and interest levels</li>
+        <li>Monthly reports and trends</li>
     </ul>
 
-    <h3>What payment methods do you accept?</h3>
-    <p>We accept all major payment methods:</p>
-    <ul>
-        <li>Visa, Mastercard, American Express, Discover</li>
-        <li>All major debit cards</li>
-        <li>Secure processing through Stripe</li>
-    </ul>
+    <h3>Can I export reports?</h3>
+    <p>Yes! You can export analytics data in various formats for further analysis or sharing with clients.</p>
 
-    <h3>Can I cancel my subscription?</h3>
-    <p>Yes! You can cancel your subscription anytime:</p>
-    <ol>
-        <li>Go to your account settings</li>
-        <li>Click "Cancel Subscription"</li>
-        <li>Confirm your cancellation</li>
-    </ol>
-    <p>You'll continue to have access until the end of your billing period.</p>
-
-    <h3>Do you offer refunds?</h3>
-    <p>We don't provide refunds for partial months. However, you can cancel anytime and won't be charged for future months.</p>
-
-    <h3>What happens to my data if I cancel?</h3>
-    <p>After cancellation:</p>
-    <ul>
-        <li>You can access your data for 30 days</li>
-        <li>Export your data before it's deleted</li>
-        <li>Data is permanently deleted after 30 days</li>
-        <li>You can reactivate anytime by adding a payment method</li>
-    </ul>
-
-    <h2>Technical Support</h2>
+    <h2>Technical Questions</h2>
 
     <h3>What browsers are supported?</h3>
     <p>Open House works on all modern browsers:</p>
@@ -180,101 +146,52 @@
     </ul>
 
     <h3>Is Open House mobile-friendly?</h3>
-    <p>Yes! Open House is fully responsive and works great on:</p>
+    <p>Yes! Open House is fully responsive and works perfectly on:</p>
     <ul>
         <li>Smartphones</li>
         <li>Tablets</li>
         <li>Desktop computers</li>
     </ul>
 
-    <h3>How do I get help if I have issues?</h3>
-    <p>We offer several support options:</p>
+    <h3>Do I need to install any software?</h3>
+    <p>No! Open House is a web-based platform. You can access it from any device with an internet connection and a web browser.</p>
+
+    <h2>Pricing & Billing</h2>
+
+    <h3>How much does Open House cost?</h3>
+    <p>Open House costs $9.99/month for our special early bird pricing (normally $39.99). This includes all features with no additional charges.</p>
+
+    <h3>Are there any hidden fees?</h3>
+    <p>No! The $9.99/month price includes everything. No setup fees, no per-property charges, no surprises.</p>
+
+    <h3>What payment methods do you accept?</h3>
+    <p>We accept all major credit and debit cards. Payments are processed securely through our payment provider.</p>
+
+    <h3>Can I get a refund?</h3>
+    <p>We don't provide refunds for partial months, but you can cancel anytime and won't be charged for future months.</p>
+
+    <h2>Support & Help</h2>
+
+    <h3>How do I get help if I have a problem?</h3>
+    <p>We're here to help! You can:</p>
     <ul>
-        <li><strong>Documentation:</strong> Comprehensive guides and tutorials</li>
-        <li><strong>FAQ:</strong> This page with common questions</li>
-        <li><strong>Email Support:</strong> support@openhouse.com</li>
-        <li><strong>Response Time:</strong> Within 24 hours</li>
+        <li>Email us at support@openhouse.showing.work</li>
+        <li>Check our documentation for detailed guides</li>
+        <li>Browse our FAQ for common questions</li>
     </ul>
 
-    <h3>Do you have an API?</h3>
-    <p>Yes! We provide a comprehensive REST API for developers. Check out our <a href="/docs/api" class="text-indigo-600 hover:text-indigo-800">API documentation</a> for details.</p>
+    <h3>How quickly do you respond to support requests?</h3>
+    <p>We typically respond to support emails within 24 hours, often much sooner.</p>
 
-    <h2>Data and Privacy</h2>
-
-    <h3>Is my data secure?</h3>
-    <p>Yes! We take security seriously:</p>
-    <ul>
-        <li>All data is encrypted in transit and at rest</li>
-        <li>Regular security audits and updates</li>
-        <li>PCI compliance for payment processing</li>
-        <li>Secure data centers with redundancy</li>
-    </ul>
-
-    <h3>Do you backup my data?</h3>
-    <p>Yes! We perform regular automated backups:</p>
-    <ul>
-        <li>Daily backups of all data</li>
-        <li>Multiple backup locations</li>
-        <li>Point-in-time recovery available</li>
-        <li>99.9% uptime guarantee</li>
-    </ul>
-
-    <h3>Can I export all my data?</h3>
-    <p>Yes! You can export your data anytime:</p>
-    <ul>
-        <li>Export individual properties as PDF</li>
-        <li>Export visitor data as CSV</li>
-        <li>Use our API for bulk data export</li>
-        <li>Download all data before cancellation</li>
-    </ul>
-
-    <h3>Do you share my data with third parties?</h3>
-    <p>No! We never sell, rent, or share your data with third parties. Your data belongs to you and is only used to provide Open House services.</p>
-
-    <h2>Features and Updates</h2>
-
-    <h3>How often do you add new features?</h3>
-    <p>We regularly update Open House with new features and improvements:</p>
-    <ul>
-        <li>Monthly feature updates</li>
-        <li>Security and performance improvements</li>
-        <li>User-requested features</li>
-        <li>Automatic updates - no action required</li>
-    </ul>
-
-    <h3>Can I request new features?</h3>
-    <p>Absolutely! We welcome feature requests:</p>
-    <ul>
-        <li>Email us at features@openhouse.com</li>
-        <li>Include detailed descriptions</li>
-        <li>We review all requests</li>
-        <li>Popular requests get priority</li>
-    </ul>
-
-    <h3>Do you have integrations with other tools?</h3>
-    <p>We're working on integrations with popular real estate tools. Currently available:</p>
-    <ul>
-        <li>REST API for custom integrations</li>
-        <li>CSV export for CRM import</li>
-        <li>Webhook support for real-time updates</li>
-    </ul>
+    <h3>Do you offer training or onboarding?</h3>
+    <p>Yes! Our documentation provides comprehensive guides to help you get started quickly. The platform is designed to be intuitive and easy to use.</p>
 
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-        <h3 class="text-blue-900 font-semibold mb-2">Still Have Questions?</h3>
-        <p class="text-blue-800">If you couldn't find the answer you're looking for, our support team is here to help. Contact us at support@openhouse.com and we'll get back to you within 24 hours.</p>
-    </div>
-
-    <div class="mt-8 pt-8 border-t border-gray-200">
-        <h2>Ready to Get Started?</h2>
-        <p>Join thousands of real estate professionals using Open House to manage their properties and close more deals.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <a href="{{ route('register') }}" class="block bg-indigo-600 text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-700 transition-colors">
-                Start Free Trial
-            </a>
-            <a href="/docs/getting-started" class="block bg-gray-100 text-gray-700 px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
-                Read Getting Started Guide
-            </a>
-        </div>
+        <h3 class="text-lg font-semibold text-blue-900 mb-2">Still Have Questions?</h3>
+        <p class="text-blue-800">If you don't see your question answered here, please don't hesitate to contact us. We're here to help you succeed with Open House!</p>
+        <a href="mailto:support@openhouse.showing.work" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            Contact Support
+        </a>
     </div>
 </div>
 @endsection

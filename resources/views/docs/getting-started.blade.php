@@ -22,12 +22,12 @@
     <h2>Quick Start Guide</h2>
 
     <h3>1. Create Your Account</h3>
-    <p>Getting started is easy and free:</p>
+    <p>Getting started is easy:</p>
     <ol>
         <li>Visit our <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-800">signup page</a></li>
         <li>Enter your name, email, and create a password</li>
         <li>Verify your email address</li>
-        <li>Start your 14-day free trial</li>
+        <li>Start using all features immediately</li>
     </ol>
 
     <h3>2. Complete Your Profile</h3>
@@ -62,11 +62,12 @@
     <h3>Property Management</h3>
     <p>Our property management system includes:</p>
     <ul>
-        <li><strong>Rich Text Editor:</strong> Create detailed property descriptions with formatting</li>
+        <li><strong>Professional Descriptions:</strong> Create detailed property descriptions with formatting</li>
         <li><strong>Photo Galleries:</strong> Upload multiple high-quality images</li>
         <li><strong>Virtual Tours:</strong> Add virtual tour links</li>
         <li><strong>Property Details:</strong> Track all MLS fields and custom information</li>
         <li><strong>Status Management:</strong> Update property status as deals progress</li>
+        <li><strong>Automatic Geocoding:</strong> Properties are automatically mapped for search</li>
     </ul>
 
     <h3>Visitor Tracking</h3>
@@ -87,39 +88,52 @@
         <li><strong>Contact Integration:</strong> Easy contact forms for interested buyers</li>
     </ul>
 
-    <h2>Subscription & Pricing</h2>
-    <p>Open House offers a simple, transparent pricing model:</p>
+    <h3>Interactive Property Search</h3>
+    <p>Advanced search capabilities for buyers:</p>
     <ul>
-        <li><strong>14-Day Free Trial:</strong> No credit card required to start</li>
-        <li><strong>$9.99/month:</strong> After your trial period</li>
-        <li><strong>Cancel Anytime:</strong> No long-term contracts</li>
+        <li><strong>Map-Based Search:</strong> Interactive map with property markers</li>
+        <li><strong>Advanced Filters:</strong> Search by location, price, beds, baths, property type</li>
+        <li><strong>Property Comparison:</strong> Compare multiple properties side-by-side</li>
+        <li><strong>Mobile Optimized:</strong> Works perfectly on all devices</li>
+    </ul>
+
+    <h3>Analytics & Reporting</h3>
+    <p>Track your business performance:</p>
+    <ul>
+        <li><strong>Visitor Analytics:</strong> See how many people visit your properties</li>
+        <li><strong>Lead Conversion:</strong> Track visitor-to-lead conversion rates</li>
+        <li><strong>Property Performance:</strong> See which properties get the most interest</li>
+        <li><strong>Monthly Reports:</strong> Detailed monthly performance summaries</li>
+    </ul>
+
+    <h2>Pricing & Plans</h2>
+    <p>Open House offers simple, transparent pricing:</p>
+    <ul>
+        <li><strong>Special Early Bird Pricing:</strong> $9.99/month (normally $39.99)</li>
         <li><strong>All Features Included:</strong> No hidden fees or upsells</li>
+        <li><strong>Cancel Anytime:</strong> No long-term contracts</li>
+        <li><strong>Unlimited Properties:</strong> Add as many properties as you need</li>
     </ul>
 
     <h2>Getting Help</h2>
     <p>Need assistance? We're here to help:</p>
     <ul>
         <li><strong>Documentation:</strong> Browse our comprehensive guides</li>
-        <li><strong>FAQ:</strong> Find answers to common questions</li>
-        <li><strong>Support:</strong> Contact our support team</li>
+        <li><strong>Email Support:</strong> Contact us at support@openhouse.showing.work</li>
+        <li><strong>Community:</strong> Connect with other real estate professionals</li>
+    </ul>
+
+    <h2>Next Steps</h2>
+    <p>Now that you're familiar with the basics, explore these areas:</p>
+    <ul>
+        <li><a href="{{ route('docs.property-management') }}" class="text-indigo-600 hover:text-indigo-800">Property Management Guide</a> - Learn how to create stunning listings</li>
+        <li><a href="{{ route('docs.visitor-tracking') }}" class="text-indigo-600 hover:text-indigo-800">Visitor Tracking Guide</a> - Master lead capture and follow-up</li>
+        <li><a href="{{ route('docs.faq') }}" class="text-indigo-600 hover:text-indigo-800">FAQ</a> - Find answers to common questions</li>
     </ul>
 
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-        <h3 class="text-blue-900 font-semibold mb-2">Pro Tip</h3>
-        <p class="text-blue-800">Take advantage of your 14-day free trial to explore all features. You can create unlimited properties and track unlimited visitors during your trial period.</p>
-    </div>
-
-    <div class="mt-8 pt-8 border-t border-gray-200">
-        <h2>Next Steps</h2>
-        <p>Ready to get started? Here's what to do next:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <a href="{{ route('register') }}" class="block bg-indigo-600 text-white px-6 py-3 rounded-lg text-center font-medium hover:bg-indigo-700 transition-colors">
-                Create Your Account
-            </a>
-            <a href="/docs/property-management" class="block bg-gray-100 text-gray-700 px-6 py-3 rounded-lg text-center font-medium hover:bg-gray-200 transition-colors">
-                Learn About Property Management
-            </a>
-        </div>
+        <h3 class="text-lg font-semibold text-blue-900 mb-2">Pro Tip</h3>
+        <p class="text-blue-800">Start by adding just one property to get familiar with the system. Once you're comfortable, you can quickly add more properties and start tracking visitors at your open houses.</p>
     </div>
 </div>
 @endsection

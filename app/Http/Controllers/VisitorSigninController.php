@@ -26,68 +26,78 @@ class VisitorSigninController extends Controller
      */
     public function store(Request $request, $propertySlug)
     {
-        $property = Property::where('slug', $propertySlug)
-            ->where('status', 'active')
-            ->firstOrFail();
+        try {
+            $property = Property::where('slug', $propertySlug)
+                ->where('status', 'active')
+                ->firstOrFail();
 
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-            'city' => 'nullable|string|max:255',
-            'state' => 'nullable|string|max:2',
-            'zip_code' => 'nullable|string|max:10',
-            'current_home_status' => 'nullable|string|in:own,rent,looking,other',
-            'timeline_to_buy' => 'nullable|string|in:immediately,1-3_months,3-6_months,6_months_plus,just_browsing',
-            'budget_min' => 'nullable|numeric|min:0',
-            'budget_max' => 'nullable|numeric|min:0|gte:budget_min',
-            'additional_notes' => 'nullable|string|max:1000',
-            'source' => 'nullable|string|max:255',
-            'interested_in_similar_properties' => 'boolean',
-            'interested_in_financing_info' => 'boolean',
-            'interested_in_market_analysis' => 'boolean',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'phone' => 'nullable|string|max:20',
+                'address' => 'nullable|string|max:500',
+                'city' => 'nullable|string|max:255',
+                'state' => 'nullable|string|max:2',
+                'zip_code' => 'nullable|string|max:10',
+                'current_home_status' => 'nullable|string|in:own,rent,looking,other',
+                'timeline_to_buy' => 'nullable|string|in:immediately,1-3_months,3-6_months,6_months_plus,just_browsing',
+                'budget_min' => 'nullable|numeric|min:0',
+                'budget_max' => 'nullable|numeric|min:0|gte:budget_min',
+                'additional_notes' => 'nullable|string|max:1000',
+                'source' => 'nullable|string|max:255',
+                'interested_in_similar_properties' => 'boolean',
+                'interested_in_financing_info' => 'boolean',
+                'interested_in_market_analysis' => 'boolean',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
+            if ($validator->fails()) {
+                return redirect()->route('public.property.signin.form', $propertySlug)
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $signin = VisitorSignin::create([
+                'property_id' => $property->id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip_code' => $request->zip_code,
+                'current_home_status' => $request->current_home_status,
+                'timeline_to_buy' => $request->timeline_to_buy,
+                'budget_min' => $request->budget_min,
+                'budget_max' => $request->budget_max,
+                'additional_notes' => $request->additional_notes,
+                'source' => $request->source,
+                'interested_in_similar_properties' => $request->boolean('interested_in_similar_properties'),
+                'interested_in_financing_info' => $request->boolean('interested_in_financing_info'),
+                'interested_in_market_analysis' => $request->boolean('interested_in_market_analysis'),
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+            ]);
+
+            // Calculate and set lead score
+            $signin->updateLeadScore();
+
+            return redirect()->route('public.property.signin.form', $propertySlug)
+                ->with('success', 'Thank you for signing in! We\'ll be in touch soon.');
+
+        } catch (\Exception $e) {
+            \Log::error('Visitor signin error', [
+                'property_slug' => $propertySlug,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'request_data' => $request->all()
+            ]);
+
+            return redirect()->route('public.property.signin.form', $propertySlug)
+                ->with('error', 'An error occurred while processing your sign-in. Please try again.')
+                ->withInput();
         }
-
-        $signin = VisitorSignin::create([
-            'property_id' => $property->id,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'city' => $request->city,
-            'state' => $request->state,
-            'zip_code' => $request->zip_code,
-            'current_home_status' => $request->current_home_status,
-            'timeline_to_buy' => $request->timeline_to_buy,
-            'budget_min' => $request->budget_min,
-            'budget_max' => $request->budget_max,
-            'additional_notes' => $request->additional_notes,
-            'source' => $request->source,
-            'interested_in_similar_properties' => $request->boolean('interested_in_similar_properties'),
-            'interested_in_financing_info' => $request->boolean('interested_in_financing_info'),
-            'interested_in_market_analysis' => $request->boolean('interested_in_market_analysis'),
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-        ]);
-
-        // Calculate and set lead score
-        $signin->updateLeadScore();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Thank you for signing in! We\'ll be in touch soon.',
-            'signin' => $signin
-        ]);
     }
 
     /**

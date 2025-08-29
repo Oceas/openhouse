@@ -442,7 +442,37 @@
                         // Add a simple marker to ensure map is working
                         const simpleMarker = L.marker([30.2639, -81.5246])
                             .addTo(this.map)
-                            .bindPopup('Anderson House - Click for details');
+                            .bindPopup(`
+                                <div class="property-popup" style="max-width: 280px;">
+                                    <h3 class="font-semibold text-lg mb-1" style="color: #1f2937;">Anderson House</h3>
+                                    <p class="text-indigo-600 font-bold text-lg mb-2">$375,000</p>
+                                    <p class="text-gray-600 text-sm mb-3">4417 Ellipse Dr., Jacksonville, FL 32246</p>
+                                    <div class="flex items-center space-x-3 text-sm text-gray-500 mb-3">
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+                                            </svg>
+                                            4 beds
+                                        </span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                                            </svg>
+                                            3 baths
+                                        </span>
+                                        <span class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                            </svg>
+                                            2,200 sqft
+                                        </span>
+                                    </div>
+                                    <a href="/p/anderson-house" class="block w-full bg-indigo-600 text-white text-center py-2 rounded font-medium hover:bg-indigo-700 transition-colors">
+                                        View Details
+                                    </a>
+                                </div>
+                            `);
                         console.log('Simple marker added to ensure map functionality');
                     } catch (error) {
                         console.error('Error initializing map:', error);
@@ -513,7 +543,7 @@
                                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                                 </svg>
-                                                ${property.property_type.replace(/_/g, ' ')}
+                                                ${property.square_feet ? property.square_feet.toLocaleString() + ' sqft' : 'N/A'}
                                             </span>
                                         </div>
                                         <a href="${property.url}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded font-medium hover:bg-indigo-700 transition-colors">

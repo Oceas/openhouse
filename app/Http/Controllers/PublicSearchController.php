@@ -84,7 +84,7 @@ class PublicSearchController extends Controller
     {
         $properties = Property::where('status', 'active')
                              ->where('is_public', true)
-                             ->select('id', 'title', 'street_address', 'city', 'state', 'zip_code', 'list_price', 'bedrooms', 'bathrooms', 'total_bathrooms', 'property_type', 'featured_image', 'latitude', 'longitude', 'slug')
+                             ->select('id', 'title', 'street_address', 'city', 'state', 'zip_code', 'list_price', 'bedrooms', 'bathrooms', 'total_bathrooms', 'property_type', 'featured_image', 'latitude', 'longitude', 'slug', 'square_feet')
                              ->get()
                              ->map(function($property) {
                                  // If property doesn't have coordinates, geocode the address
@@ -108,6 +108,7 @@ class PublicSearchController extends Controller
                                      'price' => $property->list_price ? '$' . number_format($property->list_price) : 'Price on request',
                                      'bedrooms' => $property->bedrooms,
                                      'bathrooms' => $property->total_bathrooms ?? $property->bathrooms,
+                                     'square_feet' => $property->square_feet,
                                      'property_type' => $property->property_type,
                                      'image' => $property->featured_image ? asset('storage/' . $property->featured_image) : null,
                                      'url' => route('public.property.show', $property->slug ?? 'property-' . $property->id),

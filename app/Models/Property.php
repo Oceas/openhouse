@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
+use App\Services\GeocodingService;
 
 class Property extends Model
 {
@@ -251,7 +252,7 @@ class Property extends Model
         ];
     }
 
-    // Boot method for automatic UUID and slug generation
+    // Boot method for automatic UUID, slug generation, and geocoding
     protected static function boot()
     {
         parent::boot();
@@ -263,12 +264,64 @@ class Property extends Model
             if (empty($property->slug)) {
                 $property->slug = Str::slug($property->title);
             }
+            
+            // Auto-geocode the address
+            $property->geocodeAddress();
         });
 
         static::updating(function ($property) {
             if ($property->isDirty('title') && empty($property->slug)) {
                 $property->slug = Str::slug($property->title);
             }
+            
+            // Auto-geocode if address fields changed
+            if ($property->isDirty(['street_address', 'city', 'state', 'zip_code'])) {
+                $property->geocodeAddress();
+            }
         });
+    }
+
+    /**
+     * Geocode the property address to get latitude and longitude
+     */
+    protected function geocodeAddress(): void
+    {
+        $geocodingService = new GeocodingService();
+        
+        // Build the full address
+        $address = $geocodingService->buildAddressFromProperty($this->toArray());
+        
+        if (!empty($address)) {
+            $coordinates = $geocodingService->geocodeAddress($address);
+            
+            if ($coordinates) {
+                $this->latitude = $coordinates['latitude'];
+                $this->longitude = $coordinates['longitude'];
+            }
+        }
+    }
+
+    /**
+     * Check if the property has valid coordinates
+     */
+    public function hasCoordinates(): bool
+    {
+        return !empty($this->latitude) && !empty($this->longitude) && 
+               $this->latitude != 0 && $this->longitude != 0;
+    }
+
+    /**
+     * Get coordinates as an array
+     */
+    public function getCoordinatesAttribute(): ?array
+    {
+        if ($this->hasCoordinates()) {
+            return [
+                'latitude' => $this->latitude,
+                'longitude' => $this->longitude,
+            ];
+        }
+        
+        return null;
     }
 }

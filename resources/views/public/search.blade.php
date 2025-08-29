@@ -252,6 +252,12 @@
                  x-transition:leave-end="opacity-0"
                  class="flex-1 relative">
                 <div id="map" class="map-container"></div>
+                <!-- Fallback message if map fails to load -->
+                <div x-show="!map" class="absolute inset-0 flex items-center justify-center bg-gray-100">
+                    <div class="text-center">
+                        <p class="text-gray-600">Loading map...</p>
+                    </div>
+                </div>
 
                 <!-- Property Details Panel -->
                 <div x-show="selectedProperty"
@@ -387,52 +393,62 @@
                 },
 
                 init() {
-                    // Wait for Alpine.js to be fully initialized
+                    // Initialize map when component is ready
                     this.$nextTick(() => {
-                        this.initMap();
-                        this.loadProperties();
+                        if (this.showMap) {
+                            this.initMap();
+                            this.loadProperties();
+                        }
                     });
-                                },
-
-                // Watch for map view changes
-                showMap: {
-                    handler(newVal) {
+                    
+                    // Watch for map view changes
+                    this.$watch('showMap', (newVal) => {
                         if (newVal && !this.map) {
                             this.$nextTick(() => {
                                 this.initMap();
                                 this.loadProperties();
                             });
                         }
-                    }
+                    });
                 },
 
                 initMap() {
-                    console.log('Initializing map...');
-                    console.log('Leaflet available:', typeof L !== 'undefined');
-                    
-                    const mapContainer = document.getElementById('map');
-                    console.log('Map container:', mapContainer);
-                    console.log('Map container dimensions:', mapContainer?.offsetWidth, 'x', mapContainer?.offsetHeight);
-                    
-                    if (!mapContainer) {
-                        console.error('Map container not found!');
-                        return;
-                    }
-                    
-                    if (typeof L === 'undefined') {
-                        console.error('Leaflet not loaded!');
-                        return;
-                    }
-                    
-                    // Initialize the map centered on the actual property location
-                    this.map = L.map('map').setView([30.2639, -81.5246], 14); // Georgetown, Jacksonville, FL
-                    console.log('Map initialized:', this.map);
+                    try {
+                        console.log('Initializing map...');
+                        console.log('Leaflet available:', typeof L !== 'undefined');
+                        
+                        const mapContainer = document.getElementById('map');
+                        console.log('Map container:', mapContainer);
+                        console.log('Map container dimensions:', mapContainer?.offsetWidth, 'x', mapContainer?.offsetHeight);
+                        
+                        if (!mapContainer) {
+                            console.error('Map container not found!');
+                            return;
+                        }
+                        
+                        if (typeof L === 'undefined') {
+                            console.error('Leaflet not loaded!');
+                            return;
+                        }
+                        
+                        // Initialize the map with a default view, will be adjusted when properties load
+                        this.map = L.map('map').setView([30.2639, -81.5246], 10);
+                        console.log('Map initialized:', this.map);
 
-                    // Add OpenStreetMap tiles
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '© OpenStreetMap contributors'
-                    }).addTo(this.map);
-                    console.log('Map tiles added');
+                        // Add OpenStreetMap tiles
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '© OpenStreetMap contributors'
+                        }).addTo(this.map);
+                        console.log('Map tiles added');
+                        
+                        // Add a test marker to verify map is working
+                        const testMarker = L.marker([30.2639, -81.5246])
+                            .addTo(this.map)
+                            .bindPopup('Test marker - Anderson House location');
+                        console.log('Test marker added');
+                    } catch (error) {
+                        console.error('Error initializing map:', error);
+                    }
                 },
 
                 async loadProperties() {
@@ -443,16 +459,33 @@
                         this.properties = await response.json();
                         console.log('Properties loaded:', this.properties.length, 'properties');
 
+                        // Only proceed if map is initialized
+                        if (!this.map) {
+                            console.warn('Map not initialized, skipping marker creation');
+                            return;
+                        }
+
                         // Clear existing markers
                         this.markers.forEach(marker => this.map.removeLayer(marker));
                         this.markers = [];
 
-                                                // Add markers for each property
+                        // Add markers for each property
                         this.properties.forEach(property => {
-                            console.log('Property:', property.title, 'Position:', property.position);
+                            try {
+                                console.log('Property:', property.title, 'Position:', property.position);
 
-                            // Always create a marker, even with fallback coordinates
-                            const marker = L.marker([property.position.lat, property.position.lng])
+                                // Check if coordinates are valid
+                                if (!property.position || !property.position.lat || !property.position.lng) {
+                                    console.warn('Invalid coordinates for property:', property.title);
+                                    return;
+                                }
+
+                                // Create marker with actual coordinates
+                                const lat = parseFloat(property.position.lat);
+                                const lng = parseFloat(property.position.lng);
+                                console.log('Creating marker for:', property.title, 'at:', lat, lng);
+                                
+                                const marker = L.marker([lat, lng])
                                 .addTo(this.map)
                                 .bindPopup(`
                                     <div class="property-popup">
@@ -461,8 +494,8 @@
                                         <p class="text-indigo-600 font-bold text-lg">${property.price}</p>
                                         <p class="text-gray-600 text-sm">${property.address}</p>
                                         <div class="flex items-center space-x-4 text-sm text-gray-500 mt-2">
-                                            <span>${property.bedrooms} beds</span>
-                                            <span>${property.bathrooms} baths</span>
+                                            <span>${property.bedrooms || 0} beds</span>
+                                            <span>${property.bathrooms || 0} baths</span>
                                             <span>${property.property_type}</span>
                                         </div>
                                         <a href="${property.url}" class="block w-full bg-indigo-600 text-white text-center py-2 rounded mt-3 font-medium">
@@ -476,12 +509,20 @@
                             });
 
                             this.markers.push(marker);
+                            console.log('Marker created and added to map');
+                            } catch (error) {
+                                console.error('Error creating marker for property:', property.title, error);
+                            }
                         });
 
                         // Fit map to show all markers if there are any
                         if (this.markers.length > 0) {
+                            console.log('Fitting map to show', this.markers.length, 'markers');
                             const group = new L.featureGroup(this.markers);
                             this.map.fitBounds(group.getBounds().pad(0.1));
+                            console.log('Map bounds adjusted');
+                        } else {
+                            console.warn('No markers were created');
                         }
 
                     } catch (error) {

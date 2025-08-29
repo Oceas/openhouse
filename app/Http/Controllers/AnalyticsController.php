@@ -20,10 +20,10 @@ class AnalyticsController extends Controller
 
         // Get date range from request or default to last 30 days
         $startDate = $request->get('start_date', now()->subDays(30)->format('Y-m-d'));
-        $endDate = $request->get('end_date', now()->format('Y-m-m-d'));
+        $endDate = $request->get('end_date', now()->format('Y-m-d'));
 
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
+        $start = Carbon::parse($startDate)->startOfDay();
+        $end = Carbon::parse($endDate)->endOfDay();
 
         // Get analytics data
         $analytics = $this->getAnalyticsData($user->id, $start, $end);
@@ -317,8 +317,8 @@ class AnalyticsController extends Controller
         $startDate = $request->get('start_date', now()->subDays(30)->format('Y-m-d'));
         $endDate = $request->get('end_date', now()->format('Y-m-d'));
 
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
+        $start = Carbon::parse($startDate)->startOfDay();
+        $end = Carbon::parse($endDate)->endOfDay();
 
         $analytics = $this->getAnalyticsData($user->id, $start, $end);
 

@@ -57,6 +57,44 @@ class VisitorSigninController extends Controller
                     ->withInput();
             }
 
+            // Check if this person has already signed in for this property
+            $existingSignin = VisitorSignin::where('property_id', $property->id)
+                ->where('email', $request->email)
+                ->first();
+
+            if ($existingSignin) {
+                // Update existing signin with new information
+                $existingSignin->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'phone' => $request->phone ?: $existingSignin->phone,
+                    'address' => $request->address ?: $existingSignin->address,
+                    'city' => $request->city ?: $existingSignin->city,
+                    'state' => $request->state ?: $existingSignin->state,
+                    'zip_code' => $request->zip_code ?: $existingSignin->zip_code,
+                    'current_home_status' => $request->current_home_status ?: $existingSignin->current_home_status,
+                    'timeline_to_buy' => $request->timeline_to_buy ?: $existingSignin->timeline_to_buy,
+                    'budget_min' => $request->budget_min ?: $existingSignin->budget_min,
+                    'budget_max' => $request->budget_max ?: $existingSignin->budget_max,
+                    'additional_notes' => $request->additional_notes ?: $existingSignin->additional_notes,
+                    'source' => $request->source ?: $existingSignin->source,
+                    'interested_in_similar_properties' => $request->boolean('interested_in_similar_properties') || $existingSignin->interested_in_similar_properties,
+                    'interested_in_financing_info' => $request->boolean('interested_in_financing_info') || $existingSignin->interested_in_financing_info,
+                    'interested_in_market_analysis' => $request->boolean('interested_in_market_analysis') || $existingSignin->interested_in_market_analysis,
+                    'signed_in_at' => now(), // Update the sign-in time
+                ]);
+
+                // Add interaction to track the repeat visit
+                $existingSignin->addInteraction('repeat_visit', 'Returned visitor - updated information');
+
+                // Recalculate lead score
+                $existingSignin->updateLeadScore();
+
+                return redirect()->route('public.property.signin.form', $propertySlug)
+                    ->with('success', 'Welcome back! Your information has been updated.');
+            }
+
+            // Create new signin for first-time visitor
             $signin = VisitorSignin::create([
                 'property_id' => $property->id,
                 'first_name' => $request->first_name,

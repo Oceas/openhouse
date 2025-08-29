@@ -100,6 +100,52 @@ class VisitorSignin extends Model
     }
 
     /**
+     * Get all signins for this visitor across all properties.
+     */
+    public function getAllSigninsForVisitor(): \Illuminate\Database\Eloquent\Collection
+    {
+        return static::where('email', $this->email)
+            ->orderBy('signed_in_at', 'desc')
+            ->get();
+    }
+
+    /**
+     * Get the total number of properties this visitor has signed in for.
+     */
+    public function getTotalPropertiesVisitedAttribute(): int
+    {
+        return static::where('email', $this->email)
+            ->distinct('property_id')
+            ->count('property_id');
+    }
+
+    /**
+     * Get the total number of signins for this visitor.
+     */
+    public function getTotalSigninsAttribute(): int
+    {
+        return static::where('email', $this->email)->count();
+    }
+
+    /**
+     * Check if this is a repeat visitor.
+     */
+    public function getIsRepeatVisitorAttribute(): bool
+    {
+        return static::where('email', $this->email)->count() > 1;
+    }
+
+    /**
+     * Get the first signin for this visitor.
+     */
+    public function getFirstSigninAttribute(): ?self
+    {
+        return static::where('email', $this->email)
+            ->orderBy('signed_in_at', 'asc')
+            ->first();
+    }
+
+    /**
      * Get timeline options for forms.
      */
     public static function getTimelineOptions(): array
@@ -174,6 +220,18 @@ class VisitorSignin extends Model
 
         // Contact attempts (more attempts = higher score)
         $score += min($this->contact_attempts * 0.5, 2.0);
+
+        // Repeat visit scoring (higher interest = higher score)
+        $totalSignins = $this->total_signins;
+        if ($totalSignins > 1) {
+            $score += min(($totalSignins - 1) * 1.0, 3.0); // Up to 3 points for repeat visits
+        }
+
+        // Multiple properties visited (shows broader interest)
+        $totalProperties = $this->total_properties_visited;
+        if ($totalProperties > 1) {
+            $score += min(($totalProperties - 1) * 0.5, 2.0); // Up to 2 points for multiple properties
+        }
 
         return min($score, 10.0);
     }

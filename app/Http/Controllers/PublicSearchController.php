@@ -13,14 +13,15 @@ class PublicSearchController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = Property::where('status', 'active')
-                        ->where('is_public', true);
+        try {
+            $query = Property::where('status', 'active')
+                            ->where('is_public', true);
 
         // Search by location
         if ($request->filled('location')) {
             $location = $request->location;
             $query->where(function($q) use ($location) {
-                $q->where('address', 'like', "%{$location}%")
+                $q->where('street_address', 'like', "%{$location}%")
                   ->orWhere('city', 'like', "%{$location}%")
                   ->orWhere('state', 'like', "%{$location}%")
                   ->orWhere('zip_code', 'like', "%{$location}%");
@@ -29,10 +30,10 @@ class PublicSearchController extends Controller
 
         // Filter by price range
         if ($request->filled('min_price')) {
-            $query->where('price', '>=', $request->min_price);
+            $query->where('list_price', '>=', $request->min_price);
         }
         if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
+            $query->where('list_price', '<=', $request->max_price);
         }
 
         // Filter by property type
@@ -74,7 +75,32 @@ class PublicSearchController extends Controller
             '1000000-999999999' => 'Over $1M',
         ];
 
-        return view('public.search', compact('properties', 'propertyTypes', 'priceRanges'));
+            return view('public.search', compact('properties', 'propertyTypes', 'priceRanges'));
+            
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Search error: ' . $e->getMessage(), [
+                'request' => $request->all(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            
+            // Return empty results with error message
+            $properties = collect([])->paginate(12);
+            $propertyTypes = collect([]);
+            $priceRanges = [
+                '0-100000' => 'Under $100k',
+                '100000-200000' => '$100k - $200k',
+                '200000-300000' => '$200k - $300k',
+                '300000-400000' => '$300k - $400k',
+                '400000-500000' => '$400k - $500k',
+                '500000-750000' => '$500k - $750k',
+                '750000-1000000' => '$750k - $1M',
+                '1000000-999999999' => 'Over $1M',
+            ];
+            
+            return view('public.search', compact('properties', 'propertyTypes', 'priceRanges'))
+                ->with('error', 'Sorry, there was an error processing your search. Please try again.');
+        }
     }
 
     /**

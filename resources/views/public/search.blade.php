@@ -101,6 +101,23 @@
             <div class="max-w-7xl mx-auto">
                 <h1 class="text-3xl font-bold text-gray-900 mb-4">Find Your Dream Home</h1>
 
+                @if(session('error') || isset($error))
+                    <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm text-red-800">
+                                    {{ session('error') ?? $error }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- Search Form -->
                 <form method="GET" action="{{ route('public.search') }}" class="flex flex-wrap gap-4">
                     <div class="flex-1 min-w-64">
@@ -307,8 +324,33 @@
                  x-transition:leave-end="opacity-0"
                  class="flex-1 p-6">
                 <div class="max-w-7xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($properties as $property)
+                    @if($properties->count() === 0)
+                        <div class="text-center py-12">
+                            <div class="mb-4">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">No properties found</h3>
+                            <p class="text-gray-500 mb-4">
+                                @if(request('location'))
+                                    We couldn't find any properties matching "{{ request('location') }}" with your current filters.
+                                @else
+                                    We couldn't find any properties matching your current filters.
+                                @endif
+                            </p>
+                            <div class="space-x-2">
+                                <a href="{{ route('public.search') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+                                    Clear Filters
+                                </a>
+                                <button @click="showFilters = true" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                    Adjust Filters
+                                </button>
+                            </div>
+                        </div>
+                    @else
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            @foreach($properties as $property)
                             <div class="property-card bg-white rounded-lg shadow-md overflow-hidden">
                                 <div class="relative">
                                     @if($property->featured_image)
@@ -350,6 +392,7 @@
                             </div>
                         @endforeach
                     </div>
+                    @endif
 
                     <!-- Pagination -->
                     @if($properties->hasPages())

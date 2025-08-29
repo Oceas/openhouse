@@ -391,7 +391,7 @@
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Rich text editor with Quill.js
+                            Professional property descriptions
                         </li>
                         <li class="flex items-center">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -403,7 +403,7 @@
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            PDF exports & presentations
+                            MLS-style property details
                         </li>
                     </ul>
                 </div>
@@ -544,36 +544,36 @@
                     </ul>
                 </div>
 
-                <!-- Subscription Management -->
+                <!-- Interactive Property Search -->
                 <div class="bg-white rounded-2xl p-8 card-shadow hover:transform hover:scale-105 transition-all duration-300">
                     <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
                         <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Subscription Management</h3>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Interactive Property Search</h3>
                     <p class="text-gray-600 mb-4">
-                        Seamless subscription management with Stripe integration,
-                        trial periods, and billing portal access.
+                        Advanced property search with interactive maps, filters, and
+                        real-time property discovery for buyers.
                     </p>
                     <ul class="space-y-2 text-sm text-gray-600">
                         <li class="flex items-center">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Secure Stripe payments
+                            Interactive map search
                         </li>
                         <li class="flex items-center">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            14-day free trial
+                            Advanced filtering options
                         </li>
                         <li class="flex items-center">
                             <svg class="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                             </svg>
-                            Self-service billing portal
+                            Property comparison tools
                         </li>
                     </ul>
                 </div>
@@ -838,42 +838,42 @@
             </div>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                <!-- Stripe -->
+                <!-- MLS Integration -->
                 <div class="text-center group">
                     <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 card-shadow group-hover:scale-105 transition-transform">
                         <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-xl flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.831 3.47 1.426 3.47 2.338 0 .914-.796 1.431-2.127 1.431-1.72 0-4.516-.924-6.378-2.168l-.9 5.555C6.027 22.99 8.728 24 12.165 24c2.469 0 4.565-.624 6.041-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.755-7.305zM24 13.716V0h-5.98v13.716H24z"/>
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                         </div>
-                        <h3 class="font-semibold text-gray-900">Stripe Payments</h3>
-                        <p class="text-sm text-gray-600 mt-2">Secure subscription management</p>
+                        <h3 class="font-semibold text-gray-900">MLS Integration</h3>
+                        <p class="text-sm text-gray-600 mt-2">Property data sync</p>
                     </div>
                 </div>
 
-                <!-- Email -->
+                <!-- Lead Nurturing -->
                 <div class="text-center group">
                     <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 card-shadow group-hover:scale-105 transition-transform">
                         <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-4">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                             </svg>
                         </div>
-                        <h3 class="font-semibold text-gray-900">Email Marketing</h3>
+                        <h3 class="font-semibold text-gray-900">Lead Nurturing</h3>
                         <p class="text-sm text-gray-600 mt-2">Automated follow-ups</p>
                     </div>
                 </div>
 
-                <!-- Calendar -->
+                <!-- Open House Scheduling -->
                 <div class="text-center group">
                     <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 card-shadow group-hover:scale-105 transition-transform">
                         <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mx-auto mb-4">
                             <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <h3 class="font-semibold text-gray-900">Calendar Sync</h3>
-                        <p class="text-sm text-gray-600 mt-2">Schedule management</p>
+                        <h3 class="font-semibold text-gray-900">Open House Scheduling</h3>
+                        <p class="text-sm text-gray-600 mt-2">Visitor management</p>
                     </div>
                 </div>
 

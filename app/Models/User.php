@@ -30,6 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'trial_ends_at',
+        'subscription_banner_dismissed',
     ];
 
     /**
@@ -137,5 +138,21 @@ class User extends Authenticatable
     public function trialDaysRemaining(): int
     {
         return 0;
+    }
+
+    /**
+     * Dismiss the subscription banner
+     */
+    public function dismissSubscriptionBanner(): void
+    {
+        $this->update(['subscription_banner_dismissed' => true]);
+    }
+
+    /**
+     * Check if subscription banner should be shown
+     */
+    public function shouldShowSubscriptionBanner(): bool
+    {
+        return !$this->subscription_banner_dismissed && $this->subscribed('default');
     }
 }

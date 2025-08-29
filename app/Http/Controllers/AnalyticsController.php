@@ -210,7 +210,7 @@ class AnalyticsController extends Controller
         })
         ->where('created_at', '>=', now()->subMonths(12))
         ->select(
-            DB::raw('strftime("%Y-%m", created_at) as month'),
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m") as month'),
             DB::raw('count(*) as leads'),
             DB::raw('sum(case when lead_status = "closed" then 1 else 0 end) as conversions')
         )

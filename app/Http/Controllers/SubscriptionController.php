@@ -97,7 +97,18 @@ class SubscriptionController extends Controller
                 ->with('error', 'You must have an active subscription to access the billing portal.');
         }
 
-        return $user->redirectToBillingPortal(route('dashboard'));
+        try {
+            return $user->redirectToBillingPortal(route('dashboard'));
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            if (str_contains($e->getMessage(), 'No configuration provided')) {
+                return redirect()->route('dashboard')
+                    ->with('error', 'Billing portal is not configured. Please contact support.');
+            }
+            throw $e;
+        } catch (\Exception $e) {
+            return redirect()->route('dashboard')
+                ->with('error', 'Unable to access billing portal. Please try again later.');
+        }
     }
 
     /**
@@ -134,5 +145,16 @@ class SubscriptionController extends Controller
 
         return redirect()->route('dashboard')
             ->with('error', 'Unable to resume subscription.');
+    }
+
+    /**
+     * Dismiss subscription banner
+     */
+    public function dismissBanner()
+    {
+        $user = Auth::user();
+        $user->dismissSubscriptionBanner();
+
+        return response()->json(['success' => true]);
     }
 }

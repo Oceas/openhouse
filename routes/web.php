@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/subscription/billing', [SubscriptionController::class, 'billing'])->name('subscription.billing');
     Route::post('/subscription/cancel', [SubscriptionController::class, 'cancel'])->name('subscription.cancel');
     Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
+    Route::post('/subscription/dismiss-banner', [SubscriptionController::class, 'dismissBanner'])->name('subscription.dismiss-banner');
 });
 
 Route::middleware(['auth', 'subscription'])->group(function () {

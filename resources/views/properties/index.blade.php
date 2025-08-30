@@ -116,7 +116,7 @@
                                    class="flex-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
                                     Visitors ({{ $property->visitorSignins()->count() }})
                                 </a>
-                                <a href="{{ route('public.property.signin.form', $property->slug) }}"
+                                <a href="{{ route('public.property.signin.form', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                                    target="_blank"
                                    class="flex-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 text-sm font-medium py-2 px-3 rounded-lg text-center transition-colors duration-200">
                                     Sign-in Form
@@ -130,7 +130,7 @@
                                         <span class="text-xs text-gray-500 dark:text-gray-400">Public Link:</span>
                                         <div class="flex items-center space-x-2">
                                             <input type="text"
-                                                   value="{{ route('public.property.show', $property->slug) }}"
+                                                   value="{{ route('public.property.show', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                                                    readonly
                                                    class="text-xs bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-gray-600 dark:text-gray-400 w-48">
                                             <button onclick="copyToClipboard(this)"

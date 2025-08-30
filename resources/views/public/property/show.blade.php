@@ -470,7 +470,7 @@
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Interested in this property?</h3>
                     <p class="text-sm text-gray-600 mb-4">Sign in to receive more information and updates about this listing.</p>
 
-                    <a href="{{ route('public.property.signin.form', $property->slug) }}"
+                    <a href="{{ route('public.property.signin.form', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                        class="block w-full bg-primary text-white py-3 px-4 rounded-lg font-medium hover:bg-primary/90 transition-colors text-center">
                         Sign In for More Information
                     </a>

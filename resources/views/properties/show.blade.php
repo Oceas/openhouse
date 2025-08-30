@@ -7,7 +7,7 @@
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $property->title }}</h2>
             <div class="flex space-x-3">
                 @if($property->status === 'active')
-                    <a href="{{ route('public.property.show', $property->slug) }}"
+                    <a href="{{ route('public.property.show', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                        target="_blank"
                        class="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
                         View Public Page
@@ -17,7 +17,7 @@
                    class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-200 dark:hover:bg-green-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
                     View Visitors ({{ $property->visitorSignins()->count() }})
                 </a>
-                <a href="{{ route('public.property.signin.form', $property->slug) }}"
+                <a href="{{ route('public.property.signin.form', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                    target="_blank"
                    class="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-800/50 px-4 py-2 rounded-xl font-medium transition-colors duration-200">
                     View Sign-in Form

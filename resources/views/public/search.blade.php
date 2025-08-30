@@ -383,7 +383,7 @@
 
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-500">Listed by {{ $property->user->name }}</span>
-                                        <a href="{{ route('public.property.show', $property->slug) }}"
+                                        <a href="{{ route('public.property.show', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                                            class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700">
                                             View Details
                                         </a>

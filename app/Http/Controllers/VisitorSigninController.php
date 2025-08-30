@@ -12,11 +12,13 @@ class VisitorSigninController extends Controller
     /**
      * Show the sign-in form for a property.
      */
-    public function showSigninForm($propertySlug)
+    public function showSigninForm($address, $oohId)
     {
-        $property = Property::where('slug', $propertySlug)
-            ->where('status', 'active')
-            ->firstOrFail();
+        $property = Property::findByAddressAndOohId($address, $oohId);
+
+        if (!$property) {
+            abort(404);
+        }
 
         return view('visitor-signins.signin-form', compact('property'));
     }
@@ -24,12 +26,14 @@ class VisitorSigninController extends Controller
     /**
      * Store a new visitor sign-in.
      */
-    public function store(Request $request, $propertySlug)
+    public function store(Request $request, $address, $oohId)
     {
         try {
-            $property = Property::where('slug', $propertySlug)
-                ->where('status', 'active')
-                ->firstOrFail();
+            $property = Property::findByAddressAndOohId($address, $oohId);
+
+            if (!$property) {
+                abort(404);
+            }
 
             $validator = Validator::make($request->all(), [
                 'first_name' => 'required|string|max:255',
@@ -52,7 +56,7 @@ class VisitorSigninController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->route('public.property.signin.form', $propertySlug)
+                return redirect()->route('public.property.signin.form', ['address' => $address, 'ooh_id' => $oohId])
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -90,7 +94,7 @@ class VisitorSigninController extends Controller
                 // Recalculate lead score
                 $existingSignin->updateLeadScore();
 
-                return redirect()->route('public.property.signin.form', $propertySlug)
+                return redirect()->route('public.property.signin.form', ['address' => $address, 'ooh_id' => $oohId])
                     ->with('success', 'Welcome back! Your information has been updated.');
             }
 
@@ -121,18 +125,19 @@ class VisitorSigninController extends Controller
             // Calculate and set lead score
             $signin->updateLeadScore();
 
-            return redirect()->route('public.property.signin.form', $propertySlug)
+            return redirect()->route('public.property.signin.form', ['address' => $address, 'ooh_id' => $oohId])
                 ->with('success', 'Thank you for signing in! We\'ll be in touch soon.');
 
         } catch (\Exception $e) {
             \Log::error('Visitor signin error', [
-                'property_slug' => $propertySlug,
+                'address' => $address,
+                'ooh_id' => $oohId,
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->all()
             ]);
 
-            return redirect()->route('public.property.signin.form', $propertySlug)
+            return redirect()->route('public.property.signin.form', ['address' => $address, 'ooh_id' => $oohId])
                 ->with('error', 'An error occurred while processing your sign-in. Please try again.')
                 ->withInput();
         }

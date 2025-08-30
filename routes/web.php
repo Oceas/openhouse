@@ -17,12 +17,12 @@ Route::get('/', function () {
 Route::get('/search', [App\Http\Controllers\PublicSearchController::class, 'index'])->name('public.search');
 Route::get('/search/map-properties', [App\Http\Controllers\PublicSearchController::class, 'getMapProperties'])->name('public.search.map-properties');
 
-// Public property viewing route
-Route::get('/p/{slug}', [App\Http\Controllers\PublicPropertyController::class, 'show'])->name('public.property.show');
+// Public property viewing route - new structure with address and ooh_id
+Route::get('/p/{address}/{ooh_id}', [App\Http\Controllers\PublicPropertyController::class, 'show'])->name('public.property.show');
 
-// Public visitor sign-in routes
-Route::get('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'showSigninForm'])->name('public.property.signin.form');
-Route::post('/p/{slug}/signin', [App\Http\Controllers\VisitorSigninController::class, 'store'])->name('public.property.signin');
+// Public visitor sign-in routes - new structure with address and ooh_id
+Route::get('/p/{address}/{ooh_id}/signin', [App\Http\Controllers\VisitorSigninController::class, 'showSigninForm'])->name('public.property.signin.form');
+Route::post('/p/{address}/{ooh_id}/signin', [App\Http\Controllers\VisitorSigninController::class, 'store'])->name('public.property.signin');
 
 // Stripe Webhook
 Route::post('/stripe/webhook', [App\Http\Controllers\WebhookController::class, 'handleWebhook'])

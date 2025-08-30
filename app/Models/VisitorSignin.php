@@ -11,9 +11,6 @@ class VisitorSignin extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     protected $fillable = [
         'property_id',
         'first_name',
@@ -44,6 +41,7 @@ class VisitorSignin extends Model
         'assigned_to',
         'lead_score',
         'interaction_history',
+        'uuid',
     ];
 
     protected $casts = [
@@ -338,8 +336,8 @@ class VisitorSignin extends Model
         parent::boot();
 
         static::creating(function ($visitorSignin) {
-            if (empty($visitorSignin->id)) {
-                $visitorSignin->id = Uuid::uuid4()->toString();
+            if (empty($visitorSignin->uuid)) {
+                $visitorSignin->uuid = Uuid::uuid4()->toString();
             }
             if (empty($visitorSignin->signed_in_at)) {
                 $visitorSignin->signed_in_at = now();

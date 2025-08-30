@@ -95,7 +95,7 @@
                     <img src="{{ asset('images/open-house.png') }}" alt="Open House" class="w-32 h-auto">
                 </div>
                 <div class="flex items-center">
-                    <a href="{{ route('public.property.show', $property->slug) }}"
+                    <a href="{{ route('public.property.show', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}"
                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors duration-200">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -205,7 +205,7 @@
                     </div>
                 @endif
 
-                <form id="visitor-signin-form" class="space-y-4" method="POST" action="{{ route('public.property.signin', $property->slug) }}">
+                <form id="visitor-signin-form" class="space-y-4" method="POST" action="{{ route('public.property.signin', ['address' => $property->url_address, 'ooh_id' => $property->ooh_id]) }}">
                     @csrf
 
                     <!-- Basic Information -->

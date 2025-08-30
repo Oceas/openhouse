@@ -14,9 +14,6 @@ class Property extends Model
 {
     use HasFactory;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
-
     protected $fillable = [
         'mls_number',
         'title',
@@ -70,11 +67,13 @@ class Property extends Model
         'meta_title',
         'meta_description',
         'slug',
-            'user_id',
-    'team_id',
-    'is_public',
-    'latitude',
-    'longitude',
+        'user_id',
+        'team_id',
+        'is_public',
+        'latitude',
+        'longitude',
+        'uuid',
+        'ooh_id',
     ];
 
     protected $casts = [
@@ -199,6 +198,40 @@ class Property extends Model
         return $this->gallery_images ?? [];
     }
 
+    /**
+     * Get the URL-friendly address for routing
+     */
+    public function getUrlAddressAttribute(): string
+    {
+        $address = $this->street_address;
+        $address = preg_replace('/[^a-zA-Z0-9\s]/', '', $address); // Remove special characters
+        $address = preg_replace('/\s+/', '-', trim($address)); // Replace spaces with hyphens
+        $address = strtolower($address);
+        return $address;
+    }
+
+    /**
+     * Get the public URL for this property
+     */
+    public function getPublicUrlAttribute(): string
+    {
+        return route('public.property.show', [
+            'address' => $this->url_address,
+            'ooh_id' => $this->ooh_id
+        ]);
+    }
+
+    /**
+     * Get the public signin URL for this property
+     */
+    public function getPublicSigninUrlAttribute(): string
+    {
+        return route('public.property.signin.form', [
+            'address' => $this->url_address,
+            'ooh_id' => $this->ooh_id
+        ]);
+    }
+
     // Mutators
     public function setSlugAttribute($value)
     {
@@ -252,14 +285,17 @@ class Property extends Model
         ];
     }
 
-    // Boot method for automatic UUID, slug generation, and geocoding
+    // Boot method for automatic UUID, ooh_id, slug generation, and geocoding
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($property) {
-            if (empty($property->id)) {
-                $property->id = Uuid::uuid4()->toString();
+            if (empty($property->uuid)) {
+                $property->uuid = Uuid::uuid4()->toString();
+            }
+            if (empty($property->ooh_id)) {
+                $property->ooh_id = Str::random(16);
             }
             if (empty($property->slug)) {
                 $property->slug = Str::slug($property->title);
@@ -323,5 +359,15 @@ class Property extends Model
         }
         
         return null;
+    }
+
+    /**
+     * Find property by address and ooh_id for public routes
+     */
+    public static function findByAddressAndOohId(string $address, string $oohId): ?self
+    {
+        return static::where('ooh_id', $oohId)
+            ->where('status', 'active')
+            ->first();
     }
 }

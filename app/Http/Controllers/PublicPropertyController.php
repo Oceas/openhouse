@@ -10,11 +10,13 @@ class PublicPropertyController extends Controller
     /**
      * Display the specified property publicly.
      */
-    public function show($slug)
+    public function show($address, $oohId)
     {
-        $property = Property::where('slug', $slug)
-            ->where('status', 'active')
-            ->firstOrFail();
+        $property = Property::findByAddressAndOohId($address, $oohId);
+
+        if (!$property) {
+            abort(404);
+        }
 
         return view('public.property.show', compact('property'));
     }

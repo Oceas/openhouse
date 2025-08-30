@@ -78,7 +78,8 @@
         @foreach($allImages as $index => $image)
             <div class="carousel-slide {{ $index === 0 ? 'active' : '' }}" 
                  style="background-image: url('{{ $image === 'default' ? '' : Storage::url($image) }}'); 
-                        {{ $image === 'default' ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);' : '' }}">
+                        {{ $image === 'default' ? 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);' : '' }}"
+                 data-image="{{ $image }}">
             </div>
         @endforeach
     </div>
@@ -328,10 +329,23 @@
     @endif
 
     <script>
-        // Carousel functionality
+        // Carousel functionality with lazy loading
         const slides = document.querySelectorAll('.carousel-slide');
         const dots = document.querySelectorAll('.carousel-dot');
         let currentSlide = 0;
+        let loadedImages = new Set();
+
+        function loadImage(slideElement) {
+            const imagePath = slideElement.getAttribute('data-image');
+            if (imagePath && imagePath !== 'default' && !loadedImages.has(imagePath)) {
+                const img = new Image();
+                img.onload = function() {
+                    slideElement.style.backgroundImage = `url('/storage/${imagePath}')`;
+                    loadedImages.add(imagePath);
+                };
+                img.src = `/storage/${imagePath}`;
+            }
+        }
 
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
@@ -341,6 +355,13 @@
             if (dots[index]) {
                 dots[index].classList.add('bg-white');
             }
+
+            // Lazy load the current slide's image
+            loadImage(slides[index]);
+            
+            // Preload next slide's image
+            const nextIndex = (index + 1) % slides.length;
+            loadImage(slides[nextIndex]);
         }
 
         function nextSlide() {
@@ -348,9 +369,16 @@
             showSlide(currentSlide);
         }
 
-        // Auto-advance carousel every 5 seconds
+        // Auto-advance carousel with random timing between 3-5 seconds
         if (slides.length > 1) {
-            setInterval(nextSlide, 5000);
+            function scheduleNextSlide() {
+                const randomDelay = Math.random() * 2000 + 3000; // 3000-5000ms
+                setTimeout(() => {
+                    nextSlide();
+                    scheduleNextSlide();
+                }, randomDelay);
+            }
+            scheduleNextSlide();
         }
 
         // Dot navigation

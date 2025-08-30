@@ -23,6 +23,9 @@
         }
     </script>
 
+    <!-- Input Mask Library -->
+    <script src="https://unpkg.com/imask@6.6.3/dist/imask.min.js"></script>
+
     <style>
         .carousel-container {
             position: relative;
@@ -383,6 +386,47 @@
 
         if (validationErrors) {
             setTimeout(() => hideMessage(validationErrors), 5000);
+        }
+
+        // Input masks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Phone mask
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                IMask(phoneInput, {
+                    mask: '(000) 000-0000',
+                    lazy: false,
+                    placeholderChar: '_'
+                });
+            }
+
+            // Email validation and formatting
+            const emailInput = document.getElementById('email');
+            if (emailInput) {
+                emailInput.addEventListener('blur', function() {
+                    const email = this.value.trim();
+                    if (email && !isValidEmail(email)) {
+                        this.classList.add('border-red-500');
+                        this.classList.remove('border-gray-300');
+                    } else {
+                        this.classList.remove('border-red-500');
+                        this.classList.add('border-gray-300');
+                    }
+                });
+
+                emailInput.addEventListener('input', function() {
+                    if (this.classList.contains('border-red-500')) {
+                        this.classList.remove('border-red-500');
+                        this.classList.add('border-gray-300');
+                    }
+                });
+            }
+        });
+
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
         }
     </script>
 </body>
